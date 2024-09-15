@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>DemoSeite</title>
+    <link th:href = "@{style.css}" rel="stylesheet">
+</head>
+<body>
+<div class="logo-container">
+    <a th:href="@{/}"><img th:src="@{logo2.png}"></a>
+    <span class="logo-text">radiologyx</span>
+</div>
+
+<nav>
+    <ul>
+        <li><a th:href="@{/}">Startseite</a></li> <!-- Korrektes th:href -->
+        <li><a th:href="@{/register}">Registrieren</a></li> <!-- Korrektes th:href -->
+        <li><a th:href="@{/login}">Login</a></li> <!-- Korrektes th:href -->
+    </ul>
+</nav>
+
+
+<div class="register-form">
+    <h1>Registrieren</h1>
+    <form th:action="@{/register}" th:object="${user}" method="post">
+
+        <input type="text" th:field="*{firstName}"Vorname eingeben>
+        <br><br>
+        <input type="text" th:field="*{lastName}"placeholder="Nachname eingeben">
+        <br><br>
+        <select th:field="*{role}">
+            <option value="Patient">Patient</option>
+            <option value="Arzt">Arzt</option>
+            <select/>
+        <br><br>
+        <input type="text" th:field="*{password}"placeholder="Passwort eingeben">
+        <br><br>
+        <input type="text" th:field="*{confirmPassword}"placeholder="Passwort bestätigen">
+        <br><br>
+        <button type="submit">Bestätigen</button>
+    <form/>
+
+    <div th:if="${successMessage}" th:text="${successMessage}" style="color: green;"></div>
+    <div th:if="${errorMessage}" th:text="${errorMessage}" style="color: red;"></div>
+
+</div>
+</body>
+</html>

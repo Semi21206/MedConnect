@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>DemoSeite</title>
+    <link th:href = "@{style.css}" rel="stylesheet">
+</head>
+<body>
+<div class="logo-container">
+    <a th:href="@{/}"><img th:src="@{logo2.png}"></a>
+    <span class="logo-text">radiologyx</span>
+</div>
+
+<nav>
+    <ul>
+        <li><a th:href="@{/}">Startseite</a></li> <!-- Korrektes th:href -->
+        <li><a th:href="@{/register}">Registrieren</a></li> <!-- Korrektes th:href -->
+        <li><a th:href="@{/login}">Login</a></li> <!-- Korrektes th:href -->
+    </ul>
+</nav>
+
+
+</body>
+</html>
