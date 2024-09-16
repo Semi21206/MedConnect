@@ -19,6 +19,15 @@ public class RadologyxController {
         return "login";
    }
 
+
+    @Controller
+    public class MainController {
+
+        @GetMapping("/impressum")
+        public String impressum() {
+            return "impressum"; // Das Template "impressum.html" wird geladen
+        }
+    }
    @Autowired
    private UserService userService;
 
