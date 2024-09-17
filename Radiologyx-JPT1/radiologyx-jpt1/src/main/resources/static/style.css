@@ -24,7 +24,6 @@ nav li a {
     font-family: Helvetica;
 }
 
-
 .logo-container {
     float: left; /* Das Logo bleibt links */
     margin-right: 20px; /* Abstand zwischen Logo und Navigation */
@@ -48,18 +47,20 @@ nav li a {
     margin: 0; /* Entfernt zusätzliche Margin des h2-Elements */
 }
 
+
 .login-form {
     background: #D9D9D9;
-    width: 50%;
-    height: 500px;
-    margin: 20px auto;
-    margin-bottom: 20%;
-    border-radius: 20px;
+    width: 99%; /* Nimmt 90% der Breite der Seite ein */
+    height: 99%; /* Nimmt 90% der Höhe der Seite ein */
+    border-radius: 5px;
     text-align: center; /* Zentriert den Inhalt des Formulars */
+    align-content: center;
+    padding-bottom: 10%;
+    box-sizing: border-box; /* Stellt sicher, dass Padding und Border in die Breite und Höhe einbezogen werden */
 }
 
 .login-form h1 {
-    margin-top: 50px;
+    margin-top: 10px;
     text-align: center;
     color: #0038FF;
     font-family: Helvetica;
@@ -68,11 +69,13 @@ nav li a {
 .login-form input {
     height: 70px;
     width: 40%;
-    border-radius: 20px;
+    border-radius: 5px;
     border: none; /* Entfernt den Rand */
     text-align: center;
     font-size: 20px;
     font-family: Helvetica;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 
@@ -90,7 +93,7 @@ nav li a {
 .login-form button  {
     height: 70px;
     width: 30%;
-    border-radius: 20px;
+    border-radius: 2px;
     font-size: 20px;
     color: white;
     background-color: #0038FF;
@@ -101,14 +104,19 @@ nav li a {
 register!**!
 */
 
+
 .register-form {
     background: #D9D9D9;
-    width: 40%;
-    height: 600px;
-    margin: 20px auto;
-    border-radius: 20px;
+    width: 99%; /* Nimmt 90% der Breite der Seite ein */
+    height: 99%; /* Nimmt 90% der Höhe der Seite ein */
+    border-radius: 5px;
     text-align: center; /* Zentriert den Inhalt des Formulars */
+    align-content: center;
+    padding-bottom: 10%;
+    box-sizing: border-box; /* Stellt sicher, dass Padding und Border in die Breite und Höhe einbezogen werd*/
+
 }
+
 
 .register-form h1 {
     margin-top: 65px;
@@ -117,36 +125,78 @@ register!**!
     font-family: Helvetica;
 }
 
+
 .register-form input {
-    height: 70px;
-    width: 40%;
-    border-radius: 20px;
+    height: 40px;
+    width: 20%;
+    border-radius: 5px;
     border: none; /* Entfernt den Rand */
-    text-align: center;
+    text-align: left;
     font-size: 20px;
     font-family: Helvetica;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
+/* Hover-Effekt: Farbe ändert sich, wenn Maus darüber ist */
+/* Hover-Effekt für die input-Felder */
+.register-form input:hover,
+.login-form input:hover {
+    background-color: #e7e7e7; /* Grau bei Hover */
+}
+
+
+
+
+.register-form input::placeholder {
+    font-style: italic;
+    color: gray; /* Optional, um die Placeholder-Farbe zu ändern */
+    font-family: Helvetica; /* Passend zur übrigen Schriftart */
+}
+
+
 .register-form select {
-    height: 70px;
-    width: 40%;
-    border-radius: 20px;
+    height: 40px;
+    width: 20%;
+    border-radius: 5px;
     border: none; /* Entfernt den Rand */
-    text-align: center;
+    text-align: left;
     font-size: 20px;
     font-family: Helvetica;
+    color: gray;
+    font-style: italic;
 }
 
 .register-form br {
     height: 100px;
 }
 
+
+
 .register-form button  {
     height: 70px;
     width: 30%;
-    border-radius: 20px;
+    border-radius: 2px;
     font-size: 20px;
     color: white;
     background-color: #0038FF;
-
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
+
+/* Hover-Effekt: Farbe ändert sich, wenn Maus darüber ist */
+.register-form button:hover,
+.login-form button:hover {
+    background-color: #000080; /* Navy Blau bei Hover */
+}
+
+.impressum-form {
+    font-family: Helvetica;
+    background: #e7e7e7;
+    width: 40%;
+    height: 600px;
+    margin: 20px auto;
+    border-radius: 2px;
+    text-align: center; /* Zentriert den Inhalt des Formulars */
+}
+

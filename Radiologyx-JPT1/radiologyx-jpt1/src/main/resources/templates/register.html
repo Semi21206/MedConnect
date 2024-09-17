@@ -14,37 +14,40 @@
 
 <nav>
     <ul>
-        <li><a th:href="@{/}">Startseite</a></li> <!-- Korrektes th:href -->
-        <li><a th:href="@{/register}">Registrieren</a></li> <!-- Korrektes th:href -->
-        <li><a th:href="@{/login}">Login</a></li> <!-- Korrektes th:href -->
+        <li><a th:href="@{/}">Startseite</a></li>
+        <li><a th:href="@{/register}">Registrieren</a></li>
+        <li><a th:href="@{/login}">Login</a></li>
         <li><a th:href="@{/impressum}">Impressum</a></li>
     </ul>
 </nav>
-
 
 <div class="register-form">
     <h1>Registrieren</h1>
     <form th:action="@{/register}" th:object="${user}" method="post">
 
-        <input type="text" th:field="*{firstName}"Vorname eingeben>
+        <input type="text" th:field="*{firstName}" placeholder="Vorname eingeben...">
         <br><br>
-        <input type="text" th:field="*{lastName}"placeholder="Nachname eingeben">
+        <input type="text" th:field="*{lastName}" placeholder="Nachname eingeben... ">
         <br><br>
         <select th:field="*{role}">
-            <option value="Patient">Patient</option>
-            <option value="Arzt">Arzt</option>
-            <select/>
+            <option value="" disabled selected>Auswählen...</option>
+            <option value="Patient">Mann</option>
+            <option value="Arzt">Frau</option>
+        </select>
+
+
+
         <br><br>
-        <input type="text" th:field="*{password}"placeholder="Passwort eingeben">
+        <input type="text" th:field="*{password}" placeholder="Passwort eingeben...">
         <br><br>
-        <input type="text" th:field="*{confirmPassword}"placeholder="Passwort bestätigen">
+        <input type="text" th:field="*{confirmPassword}" placeholder="Passwort bestätigen...">
         <br><br>
         <button type="submit">Bestätigen</button>
-    <form/>
+    </form>
 
     <div th:if="${successMessage}" th:text="${successMessage}" style="color: green;"></div>
     <div th:if="${errorMessage}" th:text="${errorMessage}" style="color: red;"></div>
-
 </div>
+
 </body>
 </html>
