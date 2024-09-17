@@ -2,8 +2,7 @@ nav {
     height: 46px;
     width: 85%;
     margin-left: 15%;
-    /* margin-top: 16px; */
-    background: linear-gradient(to right, #4ECCA3, darkturquoise); /* Farbverlauf wie bei Logo und Button */
+    background: linear-gradient(to right, #4ECCA3, darkturquoise);
     border-radius: 3px;
 }
 
@@ -16,7 +15,6 @@ nav li {
     margin-right: 20px;
     margin-top: -5px;
     margin-bottom: 5px;
-
 }
 
 nav li a {
@@ -27,10 +25,10 @@ nav li a {
 }
 
 .logo-container {
-    float: left; /* Das Logo bleibt links */
-    margin-right: 20px; /* Abstand zwischen Logo und Navigation */
-    display: flex; /* Flexbox sorgt dafür, dass Logo und Text nebeneinander stehen */
-    align-items: center; /* Vertikale Ausrichtung auf der gleichen Höhe */
+    float: left;
+    margin-right: 20px;
+    display: flex;
+    align-items: center;
     background: linear-gradient(to bottom, blueviolet, blue);
     -webkit-background-clip: text;
     background-clip: text;
@@ -40,7 +38,6 @@ nav li a {
 .logo-container img {
     height: 50px;
     width: 50px;
-
 }
 
 .logo-text {
@@ -50,23 +47,24 @@ nav li a {
     margin: 0;
     margin-left: 5px;
     font-weight: 600;
-
 }
 
 
 .login-form {
     background: #D9D9D9;
-    width: 99%; /* Nimmt 90% der Breite der Seite ein */
-    height: 99%; /* Nimmt 90% der Höhe der Seite ein */
+    width: 100%;
+    height: 100%;
+    padding-bottom: 25%;
+    margin-left: 10px;
+    margin-right: 20px;
     border-radius: 5px;
-    text-align: center; /* Zentriert den Inhalt des Formulars */
+    text-align: center;
     align-content: center;
-    padding-bottom: 10%;
-    box-sizing: border-box; /* Stellt sicher, dass Padding und Border in die Breite und Höhe einbezogen werden */
+    box-sizing: border-box;
 }
 
 .login-form h1 {
-    margin-top: 10px;
+    margin-top: 50px;
     text-align: center;
     color: #0038FF;
     font-family: nunito,roboto,proxima-nova,"proxima nova",sans-serif;
@@ -77,123 +75,43 @@ nav li a {
 }
 
 .login-form input {
-    height: 70px;
-    width: 40%;
+    height: 40px;
+    width: 26%;
     border-radius: 5px;
-    border: none; /* Entfernt den Rand */
-    text-align: center;
+    border: none;
+    text-align: left;
     font-size: 20px;
-    font-family: Helvetica;
+    font-family: nunito,roboto,proxima-nova,"proxima nova",sans-serif;
     cursor: pointer;
     transition: background-color 0.3s ease;
-
 }
 
 
-.login-form placeholder {
-    font-size: 15px;
-    color: #4ECCA3;
-    font-family: Helvetica;
-    align-self: center;
+.login-form input:hover,
+.login-form input:hover {
+    background-color: #e7e7e7;
+}
+
+
+.login-form input::placeholder {
+    font-style: italic;
+    color: gray;
+    font-family: nunito,roboto,proxima-nova,"proxima nova",sans-serif;
+    text-align: left;
 }
 
 .login-form br {
     height: 100px;
 }
 
-.login-form button  {
-    height: 70px;
-    width: 30%;
-    border-radius: 2px;
-    font-size: 20px;
-    color: white;
-    background-color: blue;
 
-}
-
-/*
-register!**!
-*/
-
-
-.register-form {
-    background: #D9D9D9;
-    width: 100%; /* Nimmt 90% der Breite der Seite ein */
-    height: 100%; /* Nimmt 90% der Höhe der Seite ein */
-    border-radius: 5px;
-    text-align: center; /* Zentriert den Inhalt des Formulars */
-    align-content: center;
-    padding-bottom: 10%;
-    box-sizing: border-box; /* Stellt sicher, dass Padding und Border in die Breite und Höhe einbezogen werd*/
-
-}
-
-
-.register-form h1 {
-    margin-top: 70px;
-    text-align: center;
-    color: blue;
-    font-family: nunito,roboto,proxima-nova,"proxima nova",sans-serif;
-    background: linear-gradient(to bottom,blueviolet, blue);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-
-.register-form input {
-    height: 40px;
-    width: 26%;
-    border-radius: 5px;
-    border: none; /* Entfernt den Rand */
-    text-align: left;
-    font-size: 20px;
-    font-family: nunito,roboto,proxima-nova,"proxima nova",sans-serif;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-/* Hover-Effekt: Farbe ändert sich, wenn Maus darüber ist */
-/* Hover-Effekt für die input-Felder */
-.register-form input:hover,
-.login-form input:hover {
-    background-color: #e7e7e7; /* Grau bei Hover */
-}
-
-
-
-
-.register-form input::placeholder {
-    font-style: italic;
-    color: gray; /* Optional, um die Placeholder-Farbe zu ändern */
-    font-family: Helvetica; /* Passend zur übrigen Schriftart */
-}
-
-
-.register-form select {
-    height: 40px;
-    width: 26%;
-    border-radius: 5px;
-    border: none; /* Entfernt den Rand */
-    text-align: left;
-    font-size: 20px;
-    font-family: nunito,roboto,proxima-nova,"proxima nova",sans-serif;
-    color: gray;
-    font-style: italic;
-}
-
-.register-form br {
-    height: 100px;
-}
-
-
-.register-form button {
-    background: linear-gradient(to bottom, blueviolet, blue); /* Gleicher Farbverlauf wie bei .logo-container */
-    border: 1px solid blueviolet; /* Border in einer passenden Farbe */
+.login-form button {
+    background: linear-gradient(to bottom, blueviolet, blue);
+    border: 1px solid blueviolet;
     border-radius: 6px;
-    box-shadow: rgba(0, 0, 0, 1) 1px 2px 4px; /* Standard-Box-Schatten */
+    box-shadow: rgba(0, 0, 0, 1) 1px 2px 4px;
     box-sizing: border-box;
-    color: #FFFFFF; /* Weiße Schriftfarbe für guten Kontrast */
+    color: #FFFFFF;
     cursor: pointer;
     display: inline-block;
     font-family: nunito, roboto, proxima-nova, "proxima nova", sans-serif;
@@ -211,21 +129,144 @@ register!**!
     -webkit-user-select: none;
     touch-action: manipulation;
     vertical-align: middle;
-    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease; /* Animation für Hintergrund, Text, Rand, Transform und Schatten */
+    transition: background-color 0.3s ease,
+    color 0.3s ease, border-color 0.3s ease,
+    transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.login-form button:hover,
+.login-form button:active {
+    background-color: white;
+    color: lightgray;
+    border-color: blueviolet;
+    transform: translateY(-5px);
+    box-shadow: rgba(0, 0, 0, 0.3) 3px 6px 8px;
+}
+
+
+.login-form .login-benutzername,
+.login-form .login-passwort {
+    text-align: left !important;
+    margin-left: 37% !important;
+    color: blue !important;
+    font-family: nunito,roboto,proxima-nova,"proxima nova",sans-serif  !important;
+    font-weight: 700 !important;
+    background: linear-gradient(to bottom, blueviolet   , blue) !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+}
+/*
+register!**!-------------------------------------------------------------------------------------------------------------------------------------------------------------
+*/
+
+
+.register-form {
+    background: #D9D9D9;
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+    margin-left: 10px;
+    margin-right: 20px;
+    text-align: center;
+    align-content: center;
+    padding-bottom: 10%;
+    box-sizing: border-box;
+}
+
+
+.register-form h1 {
+    margin-top: 50px;
+    text-align: center;
+    color: blue;
+    font-family: nunito,roboto,proxima-nova,"proxima nova",sans-serif;
+    background: linear-gradient(to bottom,blueviolet, blue);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+
+.register-form input {
+    height: 40px;
+    width: 26%;
+    border-radius: 5px;
+    border: none;
+    text-align: left;
+    font-size: 20px;
+    font-family: nunito,roboto,proxima-nova,"proxima nova",sans-serif;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+
+.register-form input:hover,
+.login-form input:hover {
+    background-color: #e7e7e7;
+}
+
+
+.register-form input::placeholder {
+    font-style: italic;
+    color: gray;
+    font-family: nunito,roboto,proxima-nova,"proxima nova",sans-serif;
+}
+
+
+.register-form select {
+    height: 40px;
+    width: 26%;
+    border-radius: 5px;
+    border: none;
+    text-align: left;
+    font-size: 20px;
+    font-family: nunito,roboto,proxima-nova,"proxima nova",sans-serif;
+    color: gray;
+    font-style: italic;
+}
+
+
+.register-form br {
+    height: 100px;
+}
+
+.register-form button {
+    background: linear-gradient(to bottom, blueviolet, blue);
+    border: 1px solid blueviolet;
+    border-radius: 6px;
+    box-shadow: rgba(0, 0, 0, 1) 1px 2px 4px;
+    box-sizing: border-box;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline-block;
+    font-family: nunito, roboto, proxima-nova, "proxima nova", sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 16px;
+    min-height: 40px;
+    min-width: 350px;
+    outline: 0;
+    padding: 12px 14px;
+    text-align: center;
+    text-rendering: geometricprecision;
+    text-transform: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    vertical-align: middle;
+    transition: background-color 0.3s ease,
+    color 0.3s ease, border-color 0.3s ease,
+    transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .register-form button:hover,
 .register-form button:active {
-    background-color: white; /* Weißer Hintergrund beim Hover */
-    color: lightgray; /* Textfarbe wird blueviolet */
-    border-color: blueviolet; /* Rand wird blueviolet beim Hover */
-    transform: translateY(-5px); /* Hebt den Button leicht an */
-    box-shadow: rgba(0, 0, 0, 0.3) 3px 6px 8px; /* Stärkerer Schatten beim Hover */
+    background-color: white;
+    color: lightgray;
+    border-color: blueviolet;
+    transform: translateY(-5px);
+    box-shadow: rgba(0, 0, 0, 0.3) 3px 6px 8px;
 }
-
-
-
-
 
 
 .register-form .register-vorname,
@@ -237,9 +278,9 @@ register!**!
     text-align: left !important;
     margin-left: 37% !important;
     color: blue !important;
-    font-family: nunito,roboto,proxima-nova,"proxima nova",sans-serif  !important;
+    font-family: nunito,roboto,proxima-nova,"proxima nova",sans-serif !important;
     font-weight: 700 !important;
-    background: linear-gradient(to bottom, blueviolet   , blue) !important;
+    background: linear-gradient(to bottom, blueviolet, blue) !important;
     -webkit-background-clip: text !important;
     background-clip: text !important;
     -webkit-text-fill-color: transparent !important;
@@ -248,15 +289,35 @@ register!**!
 
 
 
-/* impressum -----------------------------------------------------------------------------------------------------------*/
+/*
+impressum --------------------------------------------------------------------------------------------------------------------------------------------------------------
+*/
+.impressum-title {
+    margin-top: 50px;
+    text-align: center;
+    color: blue;
+    font-family: nunito,roboto,proxima-nova,"proxima nova",sans-serif;
+    background: linear-gradient(to bottom,blueviolet, blue);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-color: #d9d9d9;
+}
 
 .impressum-form {
-    font-family: Helvetica;
-    background: #e7e7e7;
-    width: 40%;
-    height: 600px;
-    margin: 20px auto;
-    border-radius: 2px;
-    text-align: center; /* Zentriert den Inhalt des Formulars */
+    font-family: nunito,roboto,proxima-nova,"proxima nova",sans-serif;
+    background: #d9d9d9;
+    width: 100%;
+    height: 100%;
+    margin-top: 1%;
+    margin-left: 10px;
+    margin-right: 20px;
+    border-radius: 5px;
+    text-align: center;
+    align-content: center;
+    padding-bottom: 5%;
+    box-sizing: border-box;
+    padding-left: 35%;
+    padding-right: 35%;
 }
 
