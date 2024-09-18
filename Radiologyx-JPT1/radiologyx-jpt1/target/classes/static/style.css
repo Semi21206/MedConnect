@@ -321,3 +321,144 @@ impressum ----------------------------------------------------------------------
     padding-right: 35%;
 }
 
+/*
+index------------------------------------------------------------------------------------------------------------------------------------
+ */
+/* Container für das Formular */
+.index_form {
+    background: url('radiologyx-homepage1.png') no-repeat center center;
+    background-size: cover;
+    width: 100% !important;
+    height: 100%;
+    padding-bottom: 90%;
+    margin-bottom: 1%;
+    margin-left: 10px;
+    margin-right: 20px;
+    border-radius: 5px;
+    text-align: center;
+    align-content: center;
+    box-sizing: border-box;
+    position: relative; /* Ensures the overlay and boxes are on top */
+}
+
+/* Overlay hinzufügen */
+.index_form::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(217, 217, 217, 0.7); /* Semi-transparent overlay */
+    border-radius: 5px;
+    z-index: 1; /* Overlay above the background */
+}
+
+/* Container für die Boxen */
+.index_form-container {
+    position: relative;
+    z-index: 2; /* Ensures boxes are on top of the overlay */
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Creates a 2-column grid */
+    gap: 20px; /* Adds space between the boxes */
+    justify-items: center; /* Centers the boxes horizontally */
+}
+
+/* Styling für die Boxen */
+.index_form-box {
+    background-color: #6173FF; /* Blue background */
+    color: white; /* White text */
+    padding: 20px; /* Adds padding inside the boxes */
+    width: 300px; /* Width of the boxes */
+    height: 250px; /* Height of the boxes */
+    border-radius: 15px; /* Rounded corners */
+    display: flex;
+    flex-direction: column; /* Stack the content vertically */
+    justify-content: space-between; /* Spaces content evenly */
+    text-align: left; /* Align text to the left */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow */
+    font-family: nunito, roboto, proxima-nova, "proxima nova", sans-serif;
+    position: relative;
+    z-index: 2; /* Ensures box is above the overlay */
+}
+
+.index_form-box h2 {
+    font-size: 18px;
+    margin: 0; /* Remove margin from heading */
+}
+
+.index_form-box p {
+    font-size: 14px;
+    flex-grow: 1; /* Allows the paragraph to grow and take up space */
+}
+
+.index_form-box button {
+    background-color: #0B0045; /* Dark blue button background */
+    color: white; /* White text */
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    align-self: center; /* Center the button horizontally */
+}
+
+.index_form-box button:hover {
+    background-color: #3C23A3; /* Lighter blue on hover */
+}
+
+.index_form-title {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    text-align: center;
+    color: #0038FF;
+    font-family: nunito, roboto, proxima-nova, "proxima nova", sans-serif;
+    background: linear-gradient(to bottom, blueviolet, blue);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 60px;
+}
+
+/* Styling für den Button in der Box */
+.index_form-box button {
+    background: linear-gradient(to bottom, blueviolet, blue);
+    border: 1px solid blueviolet;
+    border-radius: 6px;
+    box-shadow: rgba(0, 0, 0, 1) 1px 2px 4px;
+    box-sizing: border-box;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline-block;
+    font-family: nunito, roboto, proxima-nova, "proxima nova", sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 16px;
+    min-height: 40px;
+    min-width: 290px;
+    outline: 0;
+    padding: 12px 14px;
+    text-align: center;
+    text-rendering: geometricprecision;
+    text-transform: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    vertical-align: middle;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.index_form button:hover,
+.index_form button:active {
+    background-color: white;
+    color: lightgray;
+    border-color: blueviolet;
+    transform: translateY(-5px);
+    box-shadow: rgba(0, 0, 0, 0.3) 3px 6px 8px;
+}
+
+/* Responsive Anpassung für kleinere Bildschirme */
+@media (max-width: 600px) {
+    .index_form-container {
+        flex-direction: column; /* Boxen untereinander bei kleinen Bildschirmen */
+    }
+}
