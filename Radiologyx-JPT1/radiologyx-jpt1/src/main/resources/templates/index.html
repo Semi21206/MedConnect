@@ -25,29 +25,28 @@
     <form>
         <div class="index_form-title">Willkommen!</div>
         <div class="index_form-container">
-            <img th:src="@{logo2.png}">
-            <div class="index_form-box">
+                <div class="index_form-box">
                 <h1>Einfach Anmelden.</h1>
                 <p>Registrieren Sie sich in wenigen Minuten und genießen Sie alle Vorteile unserer Plattform!</p>
-                <button>Jetzt Anmelden</button>
+                <button> <a th:href="@{/register}">Jetzt Registrieren</a></button>
             </div>
 
             <div class="index_form-box">
                 <h1>Befunde Hochladen.</h1>
                 <p>Ärzte können schnell und sicher Befunde hochladen, ohne Stress und ohne Schnickschnack!</p>
-                <button>Jetzt Anmelden</button>
+                <button><a th:href="@{/register}">Jetzt Registrieren</a></button>
             </div>
 
             <div class="index_form-box">
                 <h1>Patienten Zugang.</h1>
                 <p>Patienten können ihre Befunde jederzeit einsehen und Termine planen, ganz bequem von zu Hause!</p>
-                <button>Jetzt Anmelden</button>
+                <button><a th:href="@{/register}">Jetzt Durchstarten</a></button>
             </div>
 
             <div class="index_form-box">
                 <h1>Schnelle Termine.</h1>
                 <p>Planen Sie Ihre Termine in nur wenigen Klicks und genießen Sie eine stressfreie Erfahrung!</p>
-                <button>Jetzt Anmelden</button>
+                <button><a th:href="@{/login}">Jetzt Termin planen</a></button>
             </div>
 
         </div>
