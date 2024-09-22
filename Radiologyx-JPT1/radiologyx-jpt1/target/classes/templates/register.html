@@ -9,7 +9,7 @@
 <body>
 <div class="logo-container">
     <a th:href="@{/}"><img th:src="@{logo2.png}"></a>
-    <span class="logo-text">Radiologyx</span>
+    <span class="logo-text">PatientenPortal</span>
 </div>
 
 <nav>
@@ -25,6 +25,11 @@
     <h1>Registrieren</h1>
     <form th:action="@{/register}" th:object="${user}" method="post">
 
+        <div class="reigster-username">Vorname:</div>
+
+        <input type="text" th:field="*{username}" placeholder="Username eingeben...">
+        <br><br>
+
         <div class="register-vorname">Vorname:</div>
 
         <input type="text" th:field="*{firstName}" placeholder="Vorname eingeben...">
@@ -35,13 +40,11 @@
         <br><br>
         <div class="register-geschlecht">Geschlecht:</div>
 
-        <select th:field="*{role}">
+        <select th:field="*{gender}">
             <option value="" disabled selected>Auswählen...</option>
-            <option value="Patient">Mann</option>
-            <option value="Arzt">Frau</option>
+            <option value="Mann">Mann</option>
+            <option value="Frau">Frau</option>
         </select>
-
-
 
         <br><br>
         <div class="register-passwort1">Passwort:</div>

@@ -9,7 +9,7 @@
 <body>
 <div class="logo-container">
     <a th:href="@{/}"><img th:src="@{logo2.png}"></a>
-    <span class="logo-text">Radiologyx</span>
+    <span class="logo-text">PatientenPortal</span>
 </div>
 
 <nav>
@@ -24,21 +24,16 @@
 
 <div class="login-form">
     <h1>Login</h1>
-    <form
-        role="form"
-        method="post">
-
-
-        <div class="login-benutzername">Benutzername:</div>
-        <input type="text" placeholder="Benutzernamen eingeben...">
-        <br>
-        <br>
+    <form th:action="@{/login}" th:object="${user}" method="post" >
+        <div class="login-username">Benutzername:</div>
+        <input type="text" th:field="*{username}" placeholder="Benutzernamen eingeben...">
+        <br><br>
         <div class="login-passwort">Passwort:</div>
-        <input type="text" placeholder="Passwort eingeben...">
-        <br>
-        <br>
-        <button>Bestätigen</button>
+        <input type="password"a th:field="*{password}" placeholder="Passwort eingeben...">
+        <br><br>
+        <button type="submit">Bestätigen</button>
     </form>
+    <div th:if="${errorMessage}" th:text="${errorMessage}" style="color: red;"></div>
 </div>
 
 

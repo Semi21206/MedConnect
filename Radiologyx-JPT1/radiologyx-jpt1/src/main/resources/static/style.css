@@ -144,7 +144,7 @@ nav li a {
 }
 
 
-.login-form .login-benutzername,
+.login-form .login-username,
 .login-form .login-passwort {
     text-align: left !important;
     margin-left: 37% !important;
@@ -268,7 +268,7 @@ register!**!--------------------------------------------------------------------
     box-shadow: rgba(0, 0, 0, 0.3) 3px 6px 8px;
 }
 
-
+.register-form .reigster-username,
 .register-form .register-vorname,
 .register-form .register-nachname,
 .register-form .register-geschlecht,
