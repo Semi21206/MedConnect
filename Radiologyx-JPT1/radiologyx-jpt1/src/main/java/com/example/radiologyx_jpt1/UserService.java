@@ -6,4 +6,6 @@ public interface UserService {
 
     User save(UserDTO userDto);
 
+    // Neue Methode zum Speichern eines Arztes
+    Arzt saveArzt(ArztDTO arztDto);
 }

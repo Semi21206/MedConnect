@@ -31,7 +31,10 @@ public class SecurityConfig {
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()) // Optional: Cookie CSRF-Token verwenden
                 )
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/login", "/register", "/impressum", "/").permitAll() // Erlaube den Zugriff auf diese Seiten
+                        .requestMatchers("/", "/impressum", "/register", "/css/**", "/js/**", "/images/**").permitAll()
+                        .requestMatchers("/arzt/befund-hochladen").hasRole("ARZT") // Nur für Ärzte
+                        .requestMatchers("/arzt/termine-einsehen").hasRole("ARZT") // Nur für Ärzte
+                        .requestMatchers("/patient/**").hasRole("PATIENT")   // Nur Patienten dürfen auf "/patient/**" zugreifen
                         .anyRequest().authenticated() // Alle anderen Seiten erfordern Authentifizierung
                 )
                 .formLogin(form -> form

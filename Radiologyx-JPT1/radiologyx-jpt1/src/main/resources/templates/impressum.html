@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 
 <head>
     <meta charset="UTF-8">
     <title>Impressum</title>
-    <link th:href = "@{style.css}" rel="stylesheet">
+    <link th:href = "@{/css/style.css}" rel="stylesheet">
 </head>
 <body>
 <div class="logo-container">
-    <a th:href="@{/}"><img th:src="@{logo2.png}"></a>
+    <a th:href="@{/}"><img th:src="@{/images/logo2.png}"></a>
     <span class="logo-text">PatientenPortal</span>
 </div>
 
@@ -18,6 +18,9 @@
         <li><a th:href="@{/register}">Registrieren</a></li>
         <li><a th:href="@{/login}">Login</a></li>
         <li><a th:href="@{/impressum}">Impressum</a></li>
+        <li th:if="${#authorization.expression('hasRole(''ARZT'')')}">
+            <a th:href="@{/arzt/termine-einsehen}">Termine einsehen</a>
+        </li>
     </ul>
 </nav>
 

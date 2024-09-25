@@ -5,19 +5,21 @@ public class UserDTO {
     private String firstName;
     private String lastName;
     private String gender;
+    private String role;
     private String password;
     private String confirmPassword;
 
     public UserDTO() {
     }
 
-    public UserDTO(String username, String firstName, String lastName, String gender, String password) {
-        super();
+    public UserDTO(String username, String firstName, String lastName, String gender, String role, String password, String confirmPassword) {
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
+        this.role = role;
         this.password = password;
+        this.confirmPassword = confirmPassword;
     }
 
     @Override
@@ -63,6 +65,14 @@ public class UserDTO {
 
     public void setGender(String gender) {
         this.gender = gender;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public String getPassword() {

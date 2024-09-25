@@ -18,18 +18,20 @@ public class User {
     private String gender;
     @Column(name = "u_password")
     private String password;
-
+    @Column(name = "u_role", nullable = false)  // Neue Spalte für die Rolle
+    private String role = "ROLE_PATIENT";  // Rolle als ROLE_PATIENT festlegen
     public User() {
     }
 
-    public User(String username, String firstName, String lastName, String gender, String password) {
-        super();
+    public User(String username, String firstName, String lastName, String gender, String password, String role) {
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
         this.password = password;
+        this.role = role;
     }
+
 
     @Override
     public String toString() {
@@ -40,6 +42,7 @@ public class User {
                 ", lastName='" + lastName + '\'' +
                 ", gender='" + gender + '\'' +
                 ", password='" + password + '\'' +
+                ", role='" + role + '\'' +
                 '}';
     }
 
@@ -89,5 +92,14 @@ public class User {
     public void setGender(String gender) {
         this.gender = gender;
     }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
 
 }

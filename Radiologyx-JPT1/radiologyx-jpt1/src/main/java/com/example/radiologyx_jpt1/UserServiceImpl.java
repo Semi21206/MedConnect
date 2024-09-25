@@ -11,6 +11,8 @@ public class UserServiceImpl implements UserService {
     PasswordEncoder passwordEncoder;
 
     private UserInterface userRepository;
+    @Autowired
+    private ArztInterface arztInterface;
 
     public UserServiceImpl(UserInterface userRepository) {
         super();
@@ -30,7 +32,27 @@ public class UserServiceImpl implements UserService {
         }
 
         User user = new User(userDto.getUsername(), userDto.getFirstName(), userDto.getLastName(),
-        userDto.getGender(), passwordEncoder.encode(userDto.getPassword()));
+        userDto.getGender(), userDto.getRole(), passwordEncoder.encode(userDto.getPassword()));
         return userRepository.save(user);
+    }
+
+    // Neue Methode zum Speichern eines Arztes
+    @Override
+    public Arzt saveArzt(ArztDTO arztDto) {
+        // Passwortvalidierung hinzufügen
+        if (!arztDto.getPassword().equals(arztDto.getConfirmPassword())) {
+            throw new IllegalArgumentException("Passwörter stimmen nicht überein");
+        }
+
+        Arzt arzt = new Arzt(
+                arztDto.getUsername(),
+                arztDto.getFirstName(),
+                arztDto.getLastName(),
+                passwordEncoder.encode(arztDto.getPassword()) // Verschlüsseltes Passwort verwenden
+        );
+
+        arzt.setRole(arztDto.getRole()); // Rolle setzen
+
+        return arztInterface.save(arzt); // Arzt in der Datenbank speichern
     }
 }

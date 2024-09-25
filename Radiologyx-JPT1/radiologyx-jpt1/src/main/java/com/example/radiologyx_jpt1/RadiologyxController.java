@@ -29,7 +29,7 @@ public class RadiologyxController {
     // Registrierung - Formular anzeigen
     @GetMapping("/register")
     public String register(Model model) {
-        model.addAttribute("user", new UserDTO()); // Leeres UserDTO für das Formular
+        model.addAttribute("user", new User()); // Ein leeres User-Objekt hinzufügen
         return "register"; // Das Template "register.html" wird geladen
     }
 
@@ -58,4 +58,18 @@ public class RadiologyxController {
             return "impressum"; // Das Template "impressum.html" wird geladen
         }
     }
+
+    @GetMapping("/arzt/befund-hochladen")
+    public String befundHochladenForm(Model model) {
+        return "befund-hochladen";
+    }
+
+    @GetMapping("/arzt/termine-einsehen")
+    public String termineEinsehenForm(Model model) {
+        return "termine-einsehen";
+    }
+
+
+
+
 }
