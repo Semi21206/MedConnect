@@ -9,7 +9,7 @@
 <body>
 <div class="logo-container">
     <a th:href="@{/}"><img th:src="@{/images/logo2.png}"></a>
-    <span class="logo-text">PatientenPortal</span>
+    <span class="logo-text">MedConnect</span>
 </div>
 
 <nav>
@@ -19,10 +19,16 @@
         <li><a th:href="@{/login}">Login</a></li> <!-- Korrektes th:href -->
         <li><a th:href="@{/impressum}">Impressum</a></li>
         <li th:if="${#authorization.expression('hasRole(''ARZT'')')}">
-            <a th:href="@{/arzt/befund-hochladen}">Befunde hochladen</a>
+            <a th:href="@{/arzt/befund-hochladen}">Befunde hochladen</a> <!-- patientenliste soll zuerst angezeigt werden und danch ahref auf befund hochladen für den jeewiligen patienten-->
         </li>
         <li th:if="${#authorization.expression('hasRole(''ARZT'')')}">
             <a th:href="@{/arzt/termine-einsehen}">Termine einsehen</a>
+        </li>
+        <li th:if="${#authorization.expression('hasRole(''PATIENT'')')}">
+            <a th:href="@{/patient/termine-vereinbaren}">Termine vereinbaren</a>
+        </li>
+        <li th:if="${#authorization.expression('hasRole(''PATIENT'')')}">
+            <a th:href="@{/patient/befunde-einesehen}">Befunde einsehen</a>
         </li>
     </ul>
 </nav>

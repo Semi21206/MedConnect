@@ -29,7 +29,8 @@ public class RadiologyxController {
     // Registrierung - Formular anzeigen
     @GetMapping("/register")
     public String register(Model model) {
-        model.addAttribute("user", new User()); // Ein leeres User-Objekt hinzufügen
+        model.addAttribute("user", new UserDTO()); // Ein leeres User-Objekt hinzufügen
+        System.out.println("Register method called"); // Protokollausgabe
         return "register"; // Das Template "register.html" wird geladen
     }
 
@@ -37,6 +38,7 @@ public class RadiologyxController {
     @PostMapping("/register")
     public String registerUser(@ModelAttribute("user") UserDTO userDTO, Model model) {
         try {
+            userDTO.setRole("PATIENT");
             // Benutzer registrieren
             userService.save(userDTO); // Existierende Methode "save" verwenden
 
@@ -59,6 +61,7 @@ public class RadiologyxController {
         }
     }
 
+    //ARZT ONLY
     @GetMapping("/arzt/befund-hochladen")
     public String befundHochladenForm(Model model) {
         return "befund-hochladen";
@@ -68,6 +71,19 @@ public class RadiologyxController {
     public String termineEinsehenForm(Model model) {
         return "termine-einsehen";
     }
+
+    //PATIENT ONLY
+    @GetMapping("/patient/termine-vereinbaren")
+    public String termineVereinbarenForm(Model model) {
+        return "termine-vereinbaren.html";
+    }
+
+    @GetMapping("/patient/befunde-einsehen")
+    public String befundeEinsehenForm(Model model) {
+        return "befunde-einsehen";
+    }
+
+
 
 
 

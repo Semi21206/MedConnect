@@ -43,7 +43,7 @@ nav li a {
 .logo-text {
     color: #0038FF;
     font-family: nunito,roboto,proxima-nova,"proxima nova",sans-serif;
-    font-size: 25px;
+    font-size: 24px;
     margin: 0;
     margin-left: 5px;
     font-weight: 600;
@@ -326,7 +326,7 @@ index---------------------------------------------------------------------------
  */
 /* Container für das Formular */
 .index_form {
-    background-image: url("../images/radiologyx-homepage1.png") ;
+    /*background-image: url("../images/radiologyx-homepage1.png") ; */
     background-size: cover;
     width: 80% !important;
     height: 100%;
@@ -390,6 +390,12 @@ index---------------------------------------------------------------------------
     color: black;
 }
 
+.index_form-box h1 {
+    color: black;
+}
+
+
+
 .index_form-box p {
     font-size: 14px;
     flex-grow: 1; /* Allows the paragraph to grow and take up space */
@@ -405,6 +411,7 @@ index---------------------------------------------------------------------------
     cursor: pointer;
     align-self: center; /* Center the button horizontally */
 }
+
 
 .index_form-box button:hover {
     background-color: #3C23A3; /* Lighter blue on hover */
@@ -452,7 +459,8 @@ index---------------------------------------------------------------------------
 }
 
 .index_form-box button a {
-    color: red;
+    color: white;
+    font-weight: bold;
 }
 
 .index_form button:hover,

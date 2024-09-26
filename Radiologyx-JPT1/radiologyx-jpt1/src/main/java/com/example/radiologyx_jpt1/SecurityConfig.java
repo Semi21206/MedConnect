@@ -32,9 +32,12 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/", "/impressum", "/register", "/css/**", "/js/**", "/images/**").permitAll()
+                        //ARZT
                         .requestMatchers("/arzt/befund-hochladen").hasRole("ARZT") // Nur für Ärzte
                         .requestMatchers("/arzt/termine-einsehen").hasRole("ARZT") // Nur für Ärzte
-                        .requestMatchers("/patient/**").hasRole("PATIENT")   // Nur Patienten dürfen auf "/patient/**" zugreifen
+                        //PATIENT
+                        .requestMatchers("/patient/befunde-einsehen").hasRole("PATIENT")   // Nur Patienten dürfen auf "/patient/befunde-einsehen" zugreifen
+                        .requestMatchers("/patient/termine-vereinbaren").hasRole("PATIENT")   // Nur Patienten dürfen auf "/patient/termine-vereinbaren.html" zugreifen
                         .anyRequest().authenticated() // Alle anderen Seiten erfordern Authentifizierung
                 )
                 .formLogin(form -> form

@@ -30,9 +30,9 @@ public class UserServiceImpl implements UserService {
         if (!userDto.getPassword().equals(userDto.getConfirmPassword())) {
             throw new IllegalArgumentException("Passwörter stimmen nicht überein");
         }
-
+        String role = "ROLE_PATIENT";
         User user = new User(userDto.getUsername(), userDto.getFirstName(), userDto.getLastName(),
-        userDto.getGender(), userDto.getRole(), passwordEncoder.encode(userDto.getPassword()));
+        userDto.getGender(), passwordEncoder.encode(userDto.getPassword()), role);
         return userRepository.save(user);
     }
 
