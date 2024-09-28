@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Patientenliste</title>
+  <link th:href="@{/css/style.css}" rel="stylesheet">
+</head>
+<body>
+
+<div class="logo-container">
+  <a th:href="@{/}"><img th:src="@{/images/logo2.png}"></a>
+  <span class="logo-text">MedConnect</span>
+</div>
+
+<nav>
+  <ul>
+    <li><a th:href="@{/}">Startseite</a></li>
+    <li><a th:href="@{/register}">Registrieren</a></li>
+    <li><a th:href="@{/login}">Login</a></li>
+    <li><a th:href="@{/impressum}">Impressum</a></li>
+  </ul>
+</nav>
+
+<div class ="befunde-patientenliste-h">
+  <h1>Patientenliste</h1>
+</div>
+
+<div class="befunde-patientenliste-container">
+    <table>
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Username</th>
+        <th>Vorname</th>
+        <th>Nachname</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="user : ${users}">
+        <td th:text="${user.id}"></td>
+        <td th:text="${user.username}"></td>
+        <td th:text="${user.firstName}"></td>
+        <td th:text="${user.lastName}"></td>
+      </tr>
+      </tbody>
+    </table>
+</div>
+</body>
+  </html>

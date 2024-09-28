@@ -27,17 +27,25 @@
     </ul>
 </nav>
 
+<div class="befund-hochladen-h">
+    <h1>Befunde hochladen</h1>
+</div>
 
-
-<h1>Befund hochladen</h1>
-
-    <form action="#" method="post" enctype="multipart/form-data">
-        <label for="file">Befunddatei auswählen:</label>
-        <input type="file" id="file" name="file">
-        <button type="submit">Hochladen</button>
+<div class="befund-hochladen-container">
+    <form method="post" enctype="multipart/form-data" th:action="@{/arzt/befund-hochladen}">
+        <label for="patientenId">Patient ID:</label>
+        <input type="text" name="patientId" id="patientenId" placeholder="Patient ID eingeben">
+        <br><br>
+        <input type="hidden" name="arztId" value="1">  <!-- Hier wird die ID des eingeloggten Arztes gesetzt -->
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+        <input type="file" name="file">
+        <br><br>
+        <button type="submit">Befund hochladen</button>
     </form>
+</div>
 
-<h1>test</h1>
-xm
+<div th:if="${successMessage}" th:text="${successMessage}" style="color: green;"></div>
+<div th:if="${errorMessage}" th:text="${errorMessage}" style="color: red;"></div>
+
 </body>
 </html>

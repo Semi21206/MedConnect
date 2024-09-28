@@ -3,6 +3,7 @@ package com.example.radiologyx_jpt1;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -33,7 +34,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/", "/impressum", "/register", "/css/**", "/js/**", "/images/**").permitAll()
                         //ARZT
-                        .requestMatchers("/arzt/befund-hochladen").hasRole("ARZT") // Nur für Ärzte
+                        .requestMatchers("/arzt/befunde-patientenliste").hasRole("ARZT")
+                        .requestMatchers(HttpMethod.GET, "/arzt/befund-hochladen").hasRole("ARZT")
+                        .requestMatchers(HttpMethod.POST, "/arzt/befund-hochladen").hasRole("ARZT")
                         .requestMatchers("/arzt/termine-einsehen").hasRole("ARZT") // Nur für Ärzte
                         //PATIENT
                         .requestMatchers("/patient/befunde-einsehen").hasRole("PATIENT")   // Nur Patienten dürfen auf "/patient/befunde-einsehen" zugreifen

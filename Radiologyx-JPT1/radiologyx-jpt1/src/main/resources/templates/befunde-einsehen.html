@@ -2,9 +2,51 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Befunde einsehen</title>
+    <link th:href="@{/css/style.css}" rel="stylesheet">
 </head>
 <body>
+
+<div class="logo-container">
+    <a th:href="@{/}"><img th:src="@{/images/logo2.png}"></a>
+    <span class="logo-text">MedConnect</span>
+</div>
+
+<nav>
+    <ul>
+        <li><a th:href="@{/}">Startseite</a></li>
+        <li><a th:href="@{/register}">Registrieren</a></li>
+        <li><a th:href="@{/login}">Login</a></li>
+        <li><a th:href="@{/impressum}">Impressum</a></li>
+    </ul>
+</nav>
+
+<div class="befunde-einsehen-h">
+    <h1>Befunde für Patient ID: <span th:text="${patientId}"></span></h1>
+</div>
+
+<div class="befund-einsehen-container">
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Dateiname</th>
+        <th>Hochgeladen am</th>
+        <th>Aktionen</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="befund : ${befunde}">
+        <td th:text="${befund.id}"></td>
+        <td th:text="${befund.dateiname}"></td>
+        <td th:text="${befund.hochgeladenAm}"></td>
+        <td>
+            <a th:href="@{/download/{dateiname}(dateiname=${befund.dateiname})}">Download</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</div>
 
 </body>
 </html>

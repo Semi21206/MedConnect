@@ -328,7 +328,7 @@ index---------------------------------------------------------------------------
 .index_form {
     /*background-image: url("../images/radiologyx-homepage1.png") ; */
     background-size: cover;
-    width: 80% !important;
+    width: 100% !important;
     height: 100%;
     padding-bottom: 5%;
     margin-bottom: 1%;
@@ -479,4 +479,60 @@ index---------------------------------------------------------------------------
     }
 }
 
+.befund-einsehen-container {
+    background: #e7e7e7;
+}
 
+.befund-einsehen-container table {
+    width: 80%;
+    height: 100%;
+    color: black;
+}
+
+.befunde-einsehen-h h1{
+    text-align: center;
+    color: #0038FF;
+}
+
+.befunde-patientenliste-container {
+    background: #e7e7e7;
+}
+
+.befunde-patientenliste-container table {
+    width: 80%;
+    height: 100%;
+    color: black;
+}
+
+.befunde-patientenliste-h {
+    text-align: center;
+    color: #0038FF;
+}
+
+.befund-hochladen-container {
+    background: #e7e7e7;
+    align-items: center;
+}
+
+.befund-hochladen-container form {
+    width: 80%;
+    height: 100%;
+    align-content: center;
+}
+
+.befund-hochladen-container form input {
+    height: 40px;
+    width: 26%;
+    border-radius: 5px;
+    border: none;
+    text-align: left;
+    font-size: 20px;
+    font-family: nunito,roboto,proxima-nova,"proxima nova",sans-serif;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.befund-hochladen-h {
+    text-align: center;
+    color: #0038FF;
+}
