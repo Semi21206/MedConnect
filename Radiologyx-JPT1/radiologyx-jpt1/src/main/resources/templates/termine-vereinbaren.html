@@ -7,7 +7,18 @@
 <body>
 
 
+<form method="post" enctype="multipart/form-data" th:action="@{/patient/termine-vereinbaren}">
+    <label for="patientId">Patient ID:</label>
+    <input type="text" id="patientId" name="patientId" required>
 
+    <label for="arztId">Arzt ID:</label>
+    <input type="text" id="arztId" name="arztId" required>
+
+    <label for="dateTime">Datum und Uhrzeit:</label>
+    <input type="datetime-local" id="dateTime" name="dateTime" required>
+
+    <button type="submit">Termin erstellen</button>
+</form>
 
 </body>
 </html>

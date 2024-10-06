@@ -517,7 +517,6 @@ index---------------------------------------------------------------------------
 .befund-hochladen-container form {
     width: 80%;
     height: 100%;
-    align-content: center;
 }
 
 .befund-hochladen-container form input {
@@ -530,6 +529,14 @@ index---------------------------------------------------------------------------
     font-family: nunito,roboto,proxima-nova,"proxima nova",sans-serif;
     cursor: pointer;
     transition: background-color 0.3s ease;
+}
+
+.befund-hochladen-container button {
+    height: 20%;
+    width: 30%;
+    background: #3C23A3;
+    color: white;
+    font-weight: bold;
 }
 
 .befund-hochladen-h {

@@ -12,6 +12,7 @@
     <span class="logo-text">MedConnect</span>
 </div>
 
+
 <nav>
     <ul>
         <li><a th:href="@{/}">Startseite</a></li> <!-- Korrektes th:href -->
@@ -28,13 +29,12 @@
 </nav>
 
 <div class="befund-hochladen-h">
-    <h1>Befunde hochladen</h1>
+    <h1>Befund hochladen für Patient: <span th:text="${patient.username}"></span></h1>
 </div>
 
 <div class="befund-hochladen-container">
-    <form method="post" enctype="multipart/form-data" th:action="@{/arzt/befund-hochladen}">
-        <label for="patientenId">Patient ID:</label>
-        <input type="text" name="patientId" id="patientenId" placeholder="Patient ID eingeben">
+    <form method="post" enctype="multipart/form-data" th:action="@{/arzt/befund-hochladen/{patientId}(patientId=${patient.id})}">
+        <input type="hidden" name="patientId" th:value="${patient.id}" />
         <br><br>
         <input type="hidden" name="arztId" value="1">  <!-- Hier wird die ID des eingeloggten Arztes gesetzt -->
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />

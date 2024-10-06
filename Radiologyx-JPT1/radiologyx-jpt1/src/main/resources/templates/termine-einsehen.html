@@ -24,7 +24,23 @@
     </ul>
 </nav>
 
-<h1>Termine einsehen</h1>
+<h1>Termine für Arzt</h1>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Patient</th>
+        <th>Datum/Zeit</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="appointment : ${appointments}">
+        <td th:text="${appointment.id}"></td>
+        <td th:text="${appointment.patient.firstName} + ' ' + ${appointment.patient.lastName}"></td>
+        <td th:text="${appointment.dateTime}"></td>
+    </tr>
+    </tbody>
+</table>
 
 
 </body>

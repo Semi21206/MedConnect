@@ -28,17 +28,13 @@
 <div class="befunde-patientenliste-container">
     <table>
       <thead>
-      <tr>
-        <th>ID</th>
-        <th>Username</th>
-        <th>Vorname</th>
-        <th>Nachname</th>
-      </tr>
+
       </thead>
       <tbody>
       <tr th:each="user : ${users}">
-        <td th:text="${user.id}"></td>
-        <td th:text="${user.username}"></td>
+        <td>
+          <a th:href="@{/arzt/befund-hochladen/{userId}(userId=${user.id})}" th:text="${user.username}"></a>
+        </td>
         <td th:text="${user.firstName}"></td>
         <td th:text="${user.lastName}"></td>
       </tr>

@@ -19,7 +19,7 @@
         <li><a th:href="@{/login}">Login</a></li> <!-- Korrektes th:href -->
         <li><a th:href="@{/impressum}">Impressum</a></li>
         <li th:if="${#authorization.expression('hasRole(''ARZT'')')}">
-            <a th:href="@{/arzt/befund-hochladen}">Befunde hochladen</a> <!-- patientenliste soll zuerst angezeigt werden und danch ahref auf befund hochladen für den jeewiligen patienten-->
+            <a th:href="@{/arzt/befunde-patientenliste}">Befunde hochladen</a> <!-- patientenliste soll zuerst angezeigt werden und danch ahref auf befund hochladen für den jeewiligen patienten-->
         </li>
         <li th:if="${#authorization.expression('hasRole(''ARZT'')')}">
             <a th:href="@{/arzt/termine-einsehen}">Termine einsehen</a>
