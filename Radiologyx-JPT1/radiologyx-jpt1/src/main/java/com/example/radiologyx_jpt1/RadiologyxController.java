@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -62,19 +63,19 @@ public class RadiologyxController {
 
     // Registrierung - Formular abschicken
     @PostMapping("/register")
-    public String registerUser(@ModelAttribute("user") UserDTO userDTO, Model model) {
-        try {
+    public String registerUser(@ModelAttribute("user") UserDTO userDTO, Model model, RedirectAttributes redirectAttributes) {
             userDTO.setRole("PATIENT");
-            // Benutzer registrieren
-            userService.save(userDTO); // Existierende Methode "save" verwenden
-
-            // Erfolgsmeldung
-            model.addAttribute("successMessage", "Registrierung war erfolgreich");
-            return "login"; // Nach erfolgreicher Registrierung zur Login-Seite weiterleiten
-        } catch (Exception e) {
-            // Fehlermeldung anzeigen, wenn etwas schief geht
-            model.addAttribute("errorMessage", e.getMessage());
-            return "register"; // Bei Fehler zurück zum Registrierungsformular
+            if (!userDTO.getFirstName().matches("[A-ZÄÖÜ][a-zäöüß]*") || !userDTO.getLastName().matches("[A-ZÄÖÜ][a-zäöüß]*")) {
+                redirectAttributes.addFlashAttribute("errorMessage",
+                        "Bitte geben Sie einen gültigen Vor- und Nachnamen ein (Großbuchstaben am Anfang).");
+                return "redirect:/register";
+            }
+            else {
+                userService.save(userDTO); // Existierende Methode "save" verwenden
+                // Benutzer registrieren
+                // Erfolgsmeldung
+                model.addAttribute("successMessage", "Registrierung war erfolgreich");
+                return "login"; // Nach erfolgreicher Registrierung zur Login-Seite weiterleiten
         }
     }
 

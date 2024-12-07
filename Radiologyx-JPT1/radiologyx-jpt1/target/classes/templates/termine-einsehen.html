@@ -3,9 +3,11 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Temine einsehen</title>
-    <link th:href = "@{/css/style.css}" rel="stylesheet">
+    <title>Termine einsehen</title>
+    <!-- Externe CSS-Datei einbinden -->
+    <link th:href="@{/css/style.css}" rel="stylesheet">
 </head>
+
 <body>
 <div class="logo-container">
     <a th:href="@{/}"><img th:src="@{/images/logo2.png}"></a>
@@ -24,8 +26,30 @@
     </ul>
 </nav>
 
-<h1>Termine einsehen</h1>
+<div class ="termine-einsehen-h">
+    <h1>Termine für Arzt</h1>
+</div>
 
-
+<!-- Container für die Termin-Tabelle -->
+<div class="termine-einsehen-container">
+    <table>
+        <!--
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Patient</th>
+            <th>Datum/Zeit</th>
+        </tr>
+        </thead>
+        -->
+        <tbody>
+        <tr th:each="appointment : ${appointments}">
+            <td th:text="${appointment.id}"></td>
+            <td th:text="${appointment.patient.firstName} + ' ' + ${appointment.patient.lastName}"></td>
+            <td th:text="${appointment.dateTime}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 </body>
 </html>

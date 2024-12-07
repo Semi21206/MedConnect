@@ -15,8 +15,6 @@
 <nav>
   <ul>
     <li><a th:href="@{/}">Startseite</a></li>
-    <li><a th:href="@{/register}">Registrieren</a></li>
-    <li><a th:href="@{/login}">Login</a></li>
     <li><a th:href="@{/impressum}">Impressum</a></li>
   </ul>
 </nav>
@@ -26,20 +24,27 @@
 </div>
 
 <div class="befunde-patientenliste-container">
-    <table>
-      <thead>
-
-      </thead>
-      <tbody>
-      <tr th:each="user : ${users}">
-        <td>
-          <a th:href="@{/arzt/befund-hochladen/{userId}(userId=${user.id})}" th:text="${user.username}"></a>
-        </td>
-        <td th:text="${user.firstName}"></td>
-        <td th:text="${user.lastName}"></td>
-      </tr>
-      </tbody>
-    </table>
+  <table>
+    <!--
+    <thead>
+    <tr>
+      <th>Vorname</th>
+      <th>Nachname</th>
+      <th>Geschlecht</th>
+      <th>ID</th>
+    </tr>
+    </thead>
+    -->
+    <tbody>
+    <tr th:each="user : ${users}">
+      <td><a th:href="@{/arzt/befund-hochladen/{userId}(userId=${user.id})}" th:text="${user.firstName}"></a></td>
+      <td><a th:href="@{/arzt/befund-hochladen/{userId}(userId=${user.id})}" th:text="${user.lastName}"></a></td>
+      <td><a th:href="@{/arzt/befund-hochladen/{userId}(userId=${user.id})}" th:text="${user.gender}"></a></td>
+      <td><a th:href="@{/arzt/befund-hochladen/{userId}(userId=${user.id})}" th:text="${user.id}"></a></td>
+    </tr>
+    </tbody>
+  </table>
 </div>
+
 </body>
-  </html>
+</html>

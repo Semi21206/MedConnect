@@ -24,6 +24,10 @@ nav li a {
     font-family: nunito,roboto,proxima-nova,"proxima nova",sans-serif;
 }
 
+h1 {
+    font-family: nunito, roboto, proxima-nova, "proxima nova", sans-serif;
+}
+
 .logo-container {
     float: left;
     margin-right: 20px;
@@ -494,14 +498,75 @@ index---------------------------------------------------------------------------
     color: #0038FF;
 }
 
-.befunde-patientenliste-container {
-    background: #e7e7e7;
+/* Patientenliste Tabelle Styling */
+/* Table Styling */
+.befunde-patientenliste-container table {
+    width: 100%;
+    border-collapse: collapse;  /* Entfernt den Standard-Abstand zwischen den Zellen */
 }
 
-.befunde-patientenliste-container table {
-    width: 80%;
-    height: 100%;
-    color: black;
+.befunde-patientenliste-container thead {
+    background-color: #ffffff; /* Weißer Hintergrund für den Header */
+    color: #333333; /* Dunkelgraue Schriftfarbe */
+    font-size: 16px; /* Angemessene Schriftgröße */
+    font-weight: bold; /* Fettgedruckte Schrift für den Header */
+    text-align: center; /* Text in der Mitte ausrichten */
+    border-bottom: 2px solid #333333; /* Eine klare Linie unter dem Header */
+}
+
+.befunde-patientenliste-container thead th {
+    padding: 12px 15px; /* Genügend Abstand in den Zellen */
+    text-align: center; /* Sicherstellen, dass der Text mittig ist */
+    font-family: 'Nunito', sans-serif; /* Konsistente Schriftart */
+}
+
+
+.befunde-patientenliste-container tbody tr {
+    background: white;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.befunde-patientenliste-container tbody tr:nth-child(odd) {
+    background: #f9f9f9;
+}
+
+.befunde-patientenliste-container tbody tr:hover {
+    background: #B0E0E6 ;  /* optional:  #e7f3ff */
+    transform: scale(1.02); /* Leichter Zoom-Effekt */
+    cursor: pointer;
+}
+
+.befunde-patientenliste-container tbody td {
+    padding: 12px;
+    text-align: center;  /* Zentriert die Zellen-Inhalte */
+    border: 1px solid #ddd;
+    font-size: 16px;
+    color: #333;
+}
+
+.befunde-patientenliste-container tbody td a {
+    text-decoration: none;
+    color: #3C23A3;
+    font-weight: bold;
+    transition: color 0.3s ease;
+
+}
+
+.befunde-patientenliste-container tbody td a:hover {
+    color: #4ECCA3;
+}
+
+.befunde-patientenliste-container tr {
+    display: flex;  /* Flex Layout, um sicherzustellen, dass jede Zeile die volle Breite ausnutzt */
+    width: 100%;  /* Volle Breite */
+}
+
+.befunde-patientenliste-container td {
+    flex: 1;  /* Jede Zelle nimmt gleichen Platz ein */
+    padding: 15px;  /* Abstand innerhalb der Zellen */
+    text-align: center;  /* Text zentrieren */
+    font-family: 'nunito', roboto, sans-serif;  /* Schriftart für Konsistenz */
+    color: black;  /* Standard-Textfarbe */
 }
 
 .befunde-patientenliste-h {
@@ -509,37 +574,170 @@ index---------------------------------------------------------------------------
     color: #0038FF;
 }
 
-.befund-hochladen-container {
-    background: #e7e7e7;
-    align-items: center;
-}
-
-.befund-hochladen-container form {
-    width: 80%;
-    height: 100%;
-}
-
-.befund-hochladen-container form input {
-    height: 40px;
-    width: 26%;
-    border-radius: 5px;
-    border: none;
-    text-align: left;
-    font-size: 20px;
-    font-family: nunito,roboto,proxima-nova,"proxima nova",sans-serif;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.befund-hochladen-container button {
-    height: 20%;
-    width: 30%;
-    background: #3C23A3;
-    color: white;
-    font-weight: bold;
-}
 
 .befund-hochladen-h {
     text-align: center;
     color: #0038FF;
+}
+
+/* Termine einsehen Sytling */
+
+/* Container für die gesamte Termin-Tabelle */
+/* Termin einsehen Container */
+/* Termine einsehen Container Styling */
+.termine-einsehen-container table {
+    width: 100%;
+    border-collapse: collapse;  /* Entfernt den Standard-Abstand zwischen den Zellen */
+}
+
+.termine-einsehen-container thead {
+    background-color: #ffffff; /* Weißer Hintergrund für den Header */
+    color: #333333; /* Dunkelgraue Schriftfarbe */
+    font-size: 16px; /* Angemessene Schriftgröße */
+    font-weight: bold; /* Fettgedruckte Schrift für den Header */
+    text-align: center; /* Text in der Mitte ausrichten */
+    border-bottom: 2px solid #333333; /* Eine klare Linie unter dem Header */
+}
+
+.termine-einsehen-container thead th {
+    padding: 12px 15px; /* Genügend Abstand in den Zellen */
+    text-align: center; /* Sicherstellen, dass der Text mittig ist */
+    font-family: 'Nunito', sans-serif; /* Konsistente Schriftart */
+}
+
+
+.termine-einsehen-container tbody tr {
+    background: white;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.termine-einsehen-container tbody tr:nth-child(odd) {
+    background: #f9f9f9;
+}
+
+.termine-einsehen-container tbody tr:hover {
+    background: #B0E0E6 ;  /* optional:  #e7f3ff */
+    transform: scale(1.02); /* Leichter Zoom-Effekt */
+    cursor: pointer;
+}
+
+.termine-einsehen-container tbody td {
+    padding: 12px;
+    text-align: center;  /* Zentriert die Zellen-Inhalte */
+    border: 1px solid #ddd;
+    font-size: 16px;
+    color: #333;
+}
+
+.termine-einsehen-container tbody td a {
+    text-decoration: none;
+    color: #3C23A3;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.termine-einsehen-container tbody td a:hover {
+    color: #4ECCA3;
+}
+
+.termine-einsehen-container tr {
+    display: flex;  /* Flex Layout, um sicherzustellen, dass jede Zeile die volle Breite ausnutzt */
+    width: 100%;  /* Volle Breite */
+}
+
+.termine-einsehen-container td {
+    flex: 1;  /* Jede Zelle nimmt gleichen Platz ein */
+    padding: 15px;  /* Abstand innerhalb der Zellen */
+    text-align: center;  /* Text zentrieren */
+    font-family: 'nunito', roboto, sans-serif;  /* Schriftart für Konsistenz */
+    color: black;  /* Standard-Textfarbe */
+}
+
+.termine-einsehen-h {
+    text-align: center;
+    color: #0038FF;
+}
+
+.befund-hochladen-container {
+    display: flex;
+    justify-content: center; /* Zentriert den Inhalt horizontal */
+    align-items: center; /* Zentriert den Inhalt vertikal */
+    height: 100%; /* Stellt sicher, dass der Container die gesamte Höhe ausfüllt */
+}
+
+.befund-hochladen-container-c {
+    background: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    align-self: center;
+    align-content: center;
+}
+
+.drag-drop-container {
+    width: 80%; /* Setzt die Breite auf 80% des Containers */
+    max-width: 600px; /* Maximale Breite für größere Bildschirme */
+    padding: 20px;
+    border: 2px dashed #4CAF50; /* Standardrahmen */
+    border-radius: 10px;
+    text-align: center; /* Zentriert den Text */
+    margin: 0 auto; /* Automatische Ränder sorgen für horizontale Zentrierung */
+    box-sizing: border-box; /* Sorgt dafür, dass padding zur Gesamtbreite gehört */
+    font-family: nunito,roboto,proxima-nova,"proxima nova",sans-serif;
+    color: #666666;
+}
+
+@media (max-width: 600px) {
+    .drag-drop-container {
+        width: 90%; /* Für kleinere Bildschirme etwas breiter */
+        padding: 15px; /* Etwas weniger Padding */
+    }
+}
+.drag-drop-container:hover {
+    background-color: #f1fdf3;
+    border-color: #388e3c;
+}
+
+.drag-drop-text {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 10px 0;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.upload-button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.upload-button:hover {
+    background-color: #45a049;
+}
+
+.file-info {
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    text-align: left;
+    background-color: white;
+    padding: 10px;
+    border-radius: 5px;
+    display: inline-block;
+    width: 100%;
+    word-wrap: break-word;
+}
+
+.file-info span {
+    font-weight: normal;
+    color: #666;
 }

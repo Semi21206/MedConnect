@@ -33,16 +33,16 @@
 
         <div class="reigster-username">Vorname:</div>
 
-        <input type="text" th:field="*{username}" placeholder="Username eingeben...">
+        <input type="text" th:field="*{username}" placeholder="Username eingeben..." >
         <br><br>
 
         <div class="register-vorname">Vorname:</div>
 
-        <input type="text" th:field="*{firstName}" placeholder="Vorname eingeben...">
+        <input type="text" th:field="*{firstName}" placeholder="Vorname eingeben..." required>
         <br><br>
         <div class="register-nachname">Nachname:</div>
 
-        <input type="text" th:field="*{lastName}" placeholder="Nachname eingeben... ">
+        <input type="text" th:field="*{lastName}" placeholder="Nachname eingeben... " required>
         <br><br>
         <div class="register-geschlecht">Geschlecht:</div>
 
@@ -63,9 +63,9 @@
         <br><br>
         <button type="submit">Bestätigen</button>
     </form>
-
-    <div th:if="${successMessage}" th:text="${successMessage}" style="color: green;"></div>
-    <div th:if="${errorMessage}" th:text="${errorMessage}" style="color: red;"></div>
+    <p></p>
+    <div th:if="${successMessage}" th:text="${successMessage}" style="color: green; font-family: 'Nunito', roboto, sans-serif; font-size: 10pt; font-weight: bold"></div>
+    <div th:if="${errorMessage}" th:text="${errorMessage}" style="color: red; font-family: 'Nunito', roboto, sans-serif; font-size: 10pt; font-weight: bold"></div>
 </div>
 
 </body>
