@@ -25,7 +25,7 @@
             <a th:href="@{/arzt/termine-einsehen}">Termine einsehen</a>
         </li>
         <li th:if="${#authorization.expression('hasRole(''PATIENT'')')}">
-            <a th:href="@{/patient/termine-vereinbaren}">Termine vereinbaren</a>
+            <a th:href="@{/patient/termine-vereinbaren/{patientId}(patientId=${patientId})}">Termin Vereinbaren</a>
         </li>
         <li th:if="${#authorization.expression('hasRole(''PATIENT'')')}">
             <a th:href="@{/patient/befunde-einsehen}">Befunde einsehen</a>

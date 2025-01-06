@@ -6,6 +6,8 @@ public interface UserService {
 
     User save(UserDTO userDto);
 
+    User findById(Long id);
+
     // Neue Methode zum Speichern eines Arztes
     Arzt saveArzt(ArztDTO arztDto);
 }

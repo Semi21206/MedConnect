@@ -11,15 +11,21 @@ public class AppointmentService {
     @Autowired
     private AppointmentInterface appointmentInterface;
 
-    public Appointment createAppointment(User patient, Arzt arzt, LocalDateTime dateTime) {
+    public void createAppointment(User patient, Arzt arzt, LocalDateTime dateTime) {
         Appointment appointment = new Appointment();
         appointment.setPatient(patient);
         appointment.setArzt(arzt);
         appointment.setDateTime(dateTime);
-        return appointmentInterface.save(appointment);
+        appointmentInterface.save(appointment);
     }
+
+    public boolean isSlotAvailable(LocalDateTime dateTime) {
+        return appointmentInterface.findByDateTime(dateTime).isEmpty();
+    }
+
     public List<Appointment> getAllAppointments(Arzt arzt) {
         return appointmentInterface.findByArzt(arzt);
     }
+
 
 }

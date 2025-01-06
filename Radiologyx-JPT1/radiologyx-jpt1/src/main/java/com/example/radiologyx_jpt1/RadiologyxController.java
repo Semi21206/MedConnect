@@ -17,8 +17,13 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.Principal;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class RadiologyxController {
@@ -39,11 +44,18 @@ public class RadiologyxController {
     private PatientService patientService;
     @Autowired
     private ArztService arztService;
+    @Autowired
+    private UserServiceImpl userServiceImpl;
 
     // Home-Seite
     @GetMapping("/")
-    public String demo() {
-        return "index";
+    public String demo(@RequestParam(required = false) Long patientId, Model model) {
+        // Wenn patientId vorhanden ist, hole den Patienten aus der Datenbank
+        if (patientId != null) {
+            User patient = userInterface.findById(patientId).orElse(null);
+            model.addAttribute("patientId", patientId);  // patientId ins Modell hinzufügen
+        }
+        return "index";  // Deine Startseite
     }
 
     // Login-Seite
@@ -140,11 +152,6 @@ public class RadiologyxController {
         return "befunde-einsehen";
     }
 
-    @GetMapping("/patient/termine-vereinbaren")
-    public String showAppointmentForm(Model model) {
-        model.addAttribute("appointment", new Appointment());
-        return "termine-vereinbaren"; // Thymeleaf-Template für das Formular
-    }
 
     @GetMapping("/download/{dateiname}")
     public ResponseEntity<FileSystemResource> downloadBefund(@PathVariable String dateiname) {
@@ -162,16 +169,76 @@ public class RadiologyxController {
         }
     }
 
-    @PostMapping("/patient/termine-vereinbaren")
-    public String createAppointment(@RequestParam Long patientId,
-                                    @RequestParam Long arztId,
-                                    @RequestParam("dateTime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateTime,
-                                    Model model) {
-        User patient = patientService.findById(patientId); // Nimm an, dass du einen PatientService hast
-        Arzt arzt = arztService.findById(arztId); // Nimm an, dass du einen ArztService hast
-        appointmentService.createAppointment(patient, arzt, dateTime);
-        model.addAttribute("successMessage", "Termin erfolgreich erstellt.");
-        return "termine-vereinbaren"; // Leitet zu einer Liste aller Termine weiter
+    @GetMapping("/patient/termine-vereinbaren/{patientId}")
+    public String showAppointmentForm(@PathVariable Long patientId, Model model) {
+        // Patient aus der Datenbank laden
+        User patient = userInterface.findById(patientId).orElse(null);
+//        if (patient == null) {
+//            model.addAttribute("errorMessage", "Patient nicht gefunden.");
+//            return "error";  // Optional: Fehlerseite
+//        }
+        model.addAttribute("availableDates", getAvailableDates());
+        model.addAttribute("appointment", new Appointment());
+        model.addAttribute("patientId", patientId);  // PatientId hinzufügen
+        model.addAttribute("patient", patient);  // Patient zum Modell hinzufügen
+
+        return "termine-vereinbaren";  // Dein Template für Termine
     }
 
+    // Verfügbare Zeiten für ein ausgewähltes Datum abrufen
+    @GetMapping("/patient/get-timeslots")
+    @ResponseBody
+    public List<LocalTime> getAvailableTimeslots(@RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+        if (date.getDayOfWeek() == DayOfWeek.SATURDAY || date.getDayOfWeek() == DayOfWeek.SUNDAY) {
+            return new ArrayList<>();
+        }
+        return getTimeslots().stream()
+                .filter(time -> appointmentService.isSlotAvailable(date.atTime(time)))
+                .collect(Collectors.toList());
+    }
+
+    // Termin erstellen
+    @PostMapping("/patient/termine-vereinbaren")
+    public String createAppointment(@RequestParam("patientId") Long patientId,
+                                    @RequestParam("dateTime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateTime,
+                                    Model model) {
+        User patient = userService.findById(patientId);
+        if (patient == null) {
+            model.addAttribute("errorMessage", "Patient nicht gefunden.");
+            return "error";
+        }
+
+        Arzt arzt = arztService.findById(1L);  // Beispiel: Es gibt nur einen Arzt mit ID 1
+        appointmentService.createAppointment(patient, arzt, dateTime);
+        model.addAttribute("successMessage", "Termin erfolgreich erstellt.");
+        return "redirect:/patient/termine-vereinbaren";
+    }
+
+
+    // Verfügbare Tage berechnen (nur werktags)
+    private List<LocalDate> getAvailableDates() {
+        LocalDate startDate = LocalDate.now();
+        LocalDate endDate = startDate.plusWeeks(1);
+        List<LocalDate> dates = new ArrayList<>();
+
+        for (LocalDate date = startDate; date.isBefore(endDate); date = date.plusDays(1)) {
+            if (date.getDayOfWeek() != DayOfWeek.SATURDAY && date.getDayOfWeek() != DayOfWeek.SUNDAY) {
+                dates.add(date);
+            }
+        }
+        return dates;
+    }
+
+    // Verfügbare Zeitslots berechnen (werktags von 8:00 bis 16:30 Uhr, alle 30 Minuten)
+    private List<LocalTime> getTimeslots() {
+        List<LocalTime> timeslots = new ArrayList<>();
+        LocalTime time = LocalTime.of(8, 0);
+        LocalTime closingTime = LocalTime.of(16, 30);
+        while (time.isBefore(closingTime)) {
+            timeslots.add(time);
+            time = time.plusMinutes(30);
+        }
+        return timeslots;
+    }
 }
+
