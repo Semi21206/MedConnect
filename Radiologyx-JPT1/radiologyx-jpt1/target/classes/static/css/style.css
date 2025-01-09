@@ -2,7 +2,7 @@ nav {
     height: 46px;
     width: 85%;
     margin-left: 15%;
-    background: linear-gradient(to right, #4ECCA3, darkturquoise);
+    background: linear-gradient(to right, #4ECCA3, darkturquoise);-->
     border-radius: 3px;
 }
 
@@ -483,20 +483,6 @@ index---------------------------------------------------------------------------
     }
 }
 
-.befund-einsehen-container {
-    background: #e7e7e7;
-}
-
-.befund-einsehen-container table {
-    width: 80%;
-    height: 100%;
-    color: black;
-}
-
-.befunde-einsehen-h h1{
-    text-align: center;
-    color: #0038FF;
-}
 
 /* Patientenliste Tabelle Styling */
 /* Table Styling */
@@ -506,18 +492,19 @@ index---------------------------------------------------------------------------
 }
 
 .befunde-patientenliste-container thead {
-    background-color: #ffffff; /* Weißer Hintergrund für den Header */
-    color: #333333; /* Dunkelgraue Schriftfarbe */
-    font-size: 16px; /* Angemessene Schriftgröße */
-    font-weight: bold; /* Fettgedruckte Schrift für den Header */
-    text-align: center; /* Text in der Mitte ausrichten */
-    border-bottom: 2px solid #333333; /* Eine klare Linie unter dem Header */
+    background-color: blue;
+    color: white;
+    text-align: center;
 }
 
 .befunde-patientenliste-container thead th {
-    padding: 12px 15px; /* Genügend Abstand in den Zellen */
-    text-align: center; /* Sicherstellen, dass der Text mittig ist */
-    font-family: 'Nunito', sans-serif; /* Konsistente Schriftart */
+    padding: 15px;
+    text-align: center;  /* Überschriften zentrieren */
+    font-size: 18px;
+    font-weight: bold;
+    font-family: 'Nunito', sans-serif;
+    border-bottom: 2px solid #ddd;
+    width: 25%;
 }
 
 
@@ -590,23 +577,27 @@ index---------------------------------------------------------------------------
     border-collapse: collapse;  /* Entfernt den Standard-Abstand zwischen den Zellen */
 }
 
+/* Styling für den Header */
+/* Überschriftenzeile */
 .termine-einsehen-container thead {
-    background-color: #ffffff; /* Weißer Hintergrund für den Header */
-    color: #333333; /* Dunkelgraue Schriftfarbe */
-    font-size: 16px; /* Angemessene Schriftgröße */
-    font-weight: bold; /* Fettgedruckte Schrift für den Header */
-    text-align: center; /* Text in der Mitte ausrichten */
-    border-bottom: 2px solid #333333; /* Eine klare Linie unter dem Header */
+    background-color: blue;
+    color: white;
+    text-align: center;
 }
 
 .termine-einsehen-container thead th {
-    padding: 12px 15px; /* Genügend Abstand in den Zellen */
-    text-align: center; /* Sicherstellen, dass der Text mittig ist */
-    font-family: 'Nunito', sans-serif; /* Konsistente Schriftart */
+    padding: 15px;
+    text-align: center;  /* Überschriften zentrieren */
+    font-size: 18px;
+    font-weight: bold;
+    font-family: 'Nunito', sans-serif;
+    border-bottom: 2px solid #ddd;
+    width: 33.3%;
 }
 
-
 .termine-einsehen-container tbody tr {
+    display: flex;
+    width: 100%;
     background: white;
     transition: background-color 0.3s ease, transform 0.3s ease;
 }
@@ -622,8 +613,9 @@ index---------------------------------------------------------------------------
 }
 
 .termine-einsehen-container tbody td {
+    flex: 1;
     padding: 12px;
-    text-align: center;  /* Zentriert die Zellen-Inhalte */
+    text-align: center;
     border: 1px solid #ddd;
     font-size: 16px;
     color: #333;
@@ -740,4 +732,82 @@ input[type="file"] {
 .file-info span {
     font-weight: normal;
     color: #666;
+}
+
+/* Befunde einsehen */
+
+.befunde-einsehen-container table {
+    width: 100%;
+    border-collapse: collapse;  /* Entfernt den Standard-Abstand zwischen den Zellen */
+}
+
+.befunde-einsehen-container thead {
+    background-color: blue;
+    color: white;
+    text-align: center;
+}
+
+.befunde-einsehen-container thead th {
+    padding: 15px;
+    text-align: center;  /* Überschriften zentrieren */
+    font-size: 18px;
+    font-weight: bold;
+    font-family: 'Nunito', sans-serif;
+    border-bottom: 2px solid #ddd;
+    width: 25%;
+}
+
+.befunde-einsehen-container tbody tr {
+    display: flex;
+    width: 100%;
+    background: white;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.befunde-einsehen-container tbody tr:nth-child(odd) {
+    background: #f9f9f9;
+}
+
+.befunde-einsehen-container tbody tr:hover {
+    background: #B0E0E6 ;  /* optional:  #e7f3ff */
+    transform: scale(1.02); /* Leichter Zoom-Effekt */
+    cursor: pointer;
+}
+
+.befunde-einsehen-container tbody td {
+    flex: 1;
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #ddd;
+    font-size: 16px;
+    color: #333;
+}
+
+.befunde-einsehen-container tbody td a {
+    text-decoration: none;
+    color: #3C23A3;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.befunde-einsehen-container tbody td a:hover {
+    color: #4ECCA3;
+}
+
+.befunde-einsehen-container tr {
+    display: flex;  /* Flex Layout, um sicherzustellen, dass jede Zeile die volle Breite ausnutzt */
+    width: 100%;  /* Volle Breite */
+}
+
+.befunde-einsehen-container td {
+    flex: 1;  /* Jede Zelle nimmt gleichen Platz ein */
+    padding: 15px;  /* Abstand innerhalb der Zellen */
+    text-align: center;  /* Text zentrieren */
+    font-family: 'nunito', roboto, sans-serif;  /* Schriftart für Konsistenz */
+    color: black;  /* Standard-Textfarbe */
+}
+
+.befunde-einsehen-h h1{
+    text-align: center;
+    color: #0038FF;
 }
