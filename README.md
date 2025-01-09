@@ -1,4 +1,4 @@
-## Patient Portal ##
+## MedConnect ##
 ## *Description:*
 The Patient Portal is a web application that allows patients to register, log in, view their medical reports, and schedule appointments with their doctors. Doctors can upload medical reports for patients and view the appointments booked by the patients.
 
