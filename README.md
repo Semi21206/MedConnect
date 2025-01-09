@@ -29,12 +29,12 @@ IntelliJ IDEA
 
 ## Installation Steps ##
 Clone the project: Open IntelliJ IDEA, go to File -> New -> Project from Version Control, and enter the Git repository URL:
-git clone https://github.com/username/patient-portal.git
+git clone https:https://github.com/Semi21206/MedConnect.git
 
 Set up the MySQL database: Create a MySQL database and configure the connection in the src/main/resources/application.properties file:
 
 ## properties:
-spring.datasource.url=jdbc:mysql://localhost:3306/patientportal
+spring.datasource.url=jdbc:mysql://localhost:3306/medconnect
 spring.datasource.username=your_db_username
 spring.datasource.password=your_db_password
 spring.jpa.hibernate.ddl-auto=update
