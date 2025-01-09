@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Befunde einsehen</title>
-    <link th:href="@{/css/style.css}" rel="stylesheet">
+    <title>Success Message</title>
+    <link th:href = "@{/css/style.css}" rel="stylesheet">
 </head>
 <body>
-
 <div class="logo-container">
     <a th:href="@{/}"><img th:src="@{/images/logo2.png}"></a>
     <span class="logo-text">MedConnect</span>
@@ -34,32 +33,8 @@
     </ul>
 </nav>
 
-<div class="befunde-einsehen-h">
-    <h1>Befunde für Patient ID: <span th:text="${patientId}"></span></h1>
-</div>
-
-<div class="befunde-einsehen-container">
-<table>
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Dateiname</th>
-        <th>Hochgeladen am</th>
-        <th>Aktionen</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="befund : ${befunde}">
-        <td th:text="${befund.id}"></td>
-        <td th:text="${befund.dateiname}"></td>
-        <td th:text="${#temporals.format(befund.hochgeladenAm, 'dd.MM.yyyy HH:mm')}"></td>
-        <td>
-            <a th:href="@{/download/{dateiname}(dateiname=${befund.dateiname})}">Download</a>
-        </td>
-    </tr>
-    </tbody>
-</table>
-</div>
+<h1 style="color: green">Ihr Termin wurde erfolgreich gebucht!</h1>
+<a th:href="@{/}">Zurück zur Startseite</a>
 
 </body>
 </html>

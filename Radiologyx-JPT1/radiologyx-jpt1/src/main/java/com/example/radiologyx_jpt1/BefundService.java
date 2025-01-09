@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -26,7 +27,7 @@ public class BefundService {
         this.arztRepository = arztRepository;
     }
 
-    public void uploadBefund(Long patientId, Long arztId, MultipartFile file) throws IOException {
+    public void uploadBefund(Long patientId, Long arztId, MultipartFile file, LocalDateTime hochgeladenAm) throws IOException {
         System.out.println("Upload Directory: " + uploadDirectory); // Protokolliere den Pfad("Upload Directory: " + uploadDirectory); // Protokolliere den Pfad
         try {
             User patient = userRepository.findById(patientId).orElseThrow(() -> new IllegalArgumentException("Patient nicht gefunden"));
@@ -53,7 +54,7 @@ public class BefundService {
             befund.setArzt(arzt); // Setze den Arzt
             befund.setPatient(patient); // Setze den Patienten
             befund.setDateiname(dateiname); // Setze den Dateinamen, falls du ihn speichern möchtest
-
+            befund.setHochgeladenAm(hochgeladenAm);
             befundRepository.save(befund);
 
             // Erfolgreiche Rückmeldung

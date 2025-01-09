@@ -14,12 +14,22 @@
 
 <nav>
     <ul>
-        <li><a th:href="@{/}">Startseite</a></li>
-        <li><a th:href="@{/register}">Registrieren</a></li>
-        <li><a th:href="@{/login}">Login</a></li>
+        <li><a th:href="@{/}">Startseite</a></li> <!-- Korrektes th:href -->
+        <li sec:authorize="!isAuthenticated()"><a th:href="@{/register}">Registrieren</a></li>
+        <li sec:authorize="!isAuthenticated()"><a th:href="@{/login}">Login</a></li>
+        <li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li>
         <li><a th:href="@{/impressum}">Impressum</a></li>
         <li th:if="${#authorization.expression('hasRole(''ARZT'')')}">
+            <a th:href="@{/arzt/befunde-patientenliste}">Befunde hochladen</a> <!-- patientenliste soll zuerst angezeigt werden und danch ahref auf befund hochladen für den jeewiligen patienten-->
+        </li>
+        <li th:if="${#authorization.expression('hasRole(''ARZT'')')}">
             <a th:href="@{/arzt/termine-einsehen}">Termine einsehen</a>
+        </li>
+        <li th:if="${#authorization.expression('hasRole(''PATIENT'')')}">
+            <a th:href="@{/patient/termine-vereinbaren}">Termin Vereinbaren</a>
+        </li>
+        <li th:if="${#authorization.expression('hasRole(''PATIENT'')')}">
+            <a th:href="@{/patient/befunde-einsehen}">Befunde einsehen</a>
         </li>
     </ul>
 </nav>

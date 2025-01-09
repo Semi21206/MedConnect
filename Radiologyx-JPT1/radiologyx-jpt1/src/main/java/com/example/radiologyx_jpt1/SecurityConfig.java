@@ -32,7 +32,8 @@ public class SecurityConfig {
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()) // Optional: Cookie CSRF-Token verwenden
                 )
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/", "/impressum", "/register", "/css/**", "/js/**", "/images/**").permitAll()
+                        .requestMatchers("/", "/impressum", "/css/**", "/js/**", "/images/**", "/termine-vereinbaren-success").permitAll()
+                        .requestMatchers("/register", "/login").not().authenticated() // Nicht zugänglich für angemeldete Nutzer
                         //ARZT
                         .requestMatchers("/arzt/befunde-patientenliste").hasRole("ARZT")
                         .requestMatchers(HttpMethod.GET, "/arzt/befund-hochladen").hasRole("ARZT")
@@ -49,6 +50,7 @@ public class SecurityConfig {
                         .defaultSuccessUrl("/", true) // Hier zur Hauptseite weiterleiten
                         .permitAll()
                 )
+
                 .logout(logout -> logout
                         .invalidateHttpSession(true)
                         .clearAuthentication(true)
@@ -56,7 +58,6 @@ public class SecurityConfig {
                         .logoutSuccessUrl("/login?logout")
                         .permitAll()
                 );
-
         return http.build();
     }
 

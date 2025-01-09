@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="UTF-8">
   <title>Patientenliste</title>
@@ -14,8 +14,23 @@
 
 <nav>
   <ul>
-    <li><a th:href="@{/}">Startseite</a></li>
+    <li><a th:href="@{/}">Startseite</a></li> <!-- Korrektes th:href -->
+    <li sec:authorize="!isAuthenticated()"><a th:href="@{/register}">Registrieren</a></li>
+    <li sec:authorize="!isAuthenticated()"><a th:href="@{/login}">Login</a></li>
+    <li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li>
     <li><a th:href="@{/impressum}">Impressum</a></li>
+    <li th:if="${#authorization.expression('hasRole(''ARZT'')')}">
+      <a th:href="@{/arzt/befunde-patientenliste}">Befunde hochladen</a> <!-- patientenliste soll zuerst angezeigt werden und danch ahref auf befund hochladen für den jeewiligen patienten-->
+    </li>
+    <li th:if="${#authorization.expression('hasRole(''ARZT'')')}">
+      <a th:href="@{/arzt/termine-einsehen}">Termine einsehen</a>
+    </li>
+    <li th:if="${#authorization.expression('hasRole(''PATIENT'')')}">
+      <a th:href="@{/patient/termine-vereinbaren}">Termin Vereinbaren</a>
+    </li>
+    <li th:if="${#authorization.expression('hasRole(''PATIENT'')')}">
+      <a th:href="@{/patient/befunde-einsehen}">Befunde einsehen</a>
+    </li>
   </ul>
 </nav>
 
@@ -25,16 +40,14 @@
 
 <div class="befunde-patientenliste-container">
   <table>
-    <!--
-    <thead>
-    <tr>
-      <th>Vorname</th>
-      <th>Nachname</th>
-      <th>Geschlecht</th>
-      <th>ID</th>
-    </tr>
-    </thead>
-    -->
+      <thead>
+        <tr>
+            <th>Vorname</th>
+            <th>Nachname</th>
+            <th>Geschlecht</th>
+            <th>ID</th>
+        </tr>
+      </thead>
     <tbody>
     <tr th:each="user : ${users}">
       <td><a th:href="@{/arzt/befund-hochladen/{userId}(userId=${user.id})}" th:text="${user.firstName}"></a></td>

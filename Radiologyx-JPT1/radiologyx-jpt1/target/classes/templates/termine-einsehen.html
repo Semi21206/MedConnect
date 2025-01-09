@@ -17,11 +17,21 @@
 <nav>
     <ul>
         <li><a th:href="@{/}">Startseite</a></li> <!-- Korrektes th:href -->
-        <li><a th:href="@{/register}">Registrieren</a></li> <!-- Korrektes th:href -->
-        <li><a th:href="@{/login}">Login</a></li> <!-- Korrektes th:href -->
+        <li sec:authorize="!isAuthenticated()"><a th:href="@{/register}">Registrieren</a></li>
+        <li sec:authorize="!isAuthenticated()"><a th:href="@{/login}">Login</a></li>
+        <li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li>
         <li><a th:href="@{/impressum}">Impressum</a></li>
         <li th:if="${#authorization.expression('hasRole(''ARZT'')')}">
+            <a th:href="@{/arzt/befunde-patientenliste}">Befunde hochladen</a> <!-- patientenliste soll zuerst angezeigt werden und danch ahref auf befund hochladen für den jeewiligen patienten-->
+        </li>
+        <li th:if="${#authorization.expression('hasRole(''ARZT'')')}">
             <a th:href="@{/arzt/termine-einsehen}">Termine einsehen</a>
+        </li>
+        <li th:if="${#authorization.expression('hasRole(''PATIENT'')')}">
+            <a th:href="@{/patient/termine-vereinbaren}">Termin Vereinbaren</a>
+        </li>
+        <li th:if="${#authorization.expression('hasRole(''PATIENT'')')}">
+            <a th:href="@{/patient/befunde-einsehen}">Befunde einsehen</a>
         </li>
     </ul>
 </nav>
@@ -33,20 +43,18 @@
 <!-- Container für die Termin-Tabelle -->
 <div class="termine-einsehen-container">
     <table>
-        <!--
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Patient</th>
-            <th>Datum/Zeit</th>
-        </tr>
+       <thead>
+            <tr>
+                <th>Patienten-ID</th>
+                <th>Patient</th>
+                <th>Datum/Uhrzeit</th>
+            </tr>
         </thead>
-        -->
         <tbody>
         <tr th:each="appointment : ${appointments}">
             <td th:text="${appointment.id}"></td>
             <td th:text="${appointment.patient.firstName} + ' ' + ${appointment.patient.lastName}"></td>
-            <td th:text="${appointment.dateTime}"></td>
+            <td th:text="${#dates.format(T(java.util.Date).from(appointment.dateTime.atZone(T(java.time.ZoneId).systemDefault()).toInstant()), 'dd.MM.yyyy HH:mm')}"></td>
         </tr>
         </tbody>
     </table>

@@ -60,14 +60,22 @@ public class RadiologyxController {
 
     // Login-Seite
     @GetMapping("/login")
-    public String login(Model model) {
+    public String login(Model model, Principal principal) {
+        if (principal != null) {
+            model.addAttribute("errorMessage", "Sie sind bereits angemeldet.");
+            return "redirect:/404";  // Weiterleitung zur 403-Fehlerseite
+        }
         model.addAttribute("user", new User()); // User ist deine Klasse für das Login
         return "login"; // Name des Templates ohne .html
     }
 
     // Registrierung - Formular anzeigen
     @GetMapping("/register")
-    public String register(Model model) {
+    public String register(Model model, Principal principal) {
+        if (principal != null) {
+            model.addAttribute("errorMessage", "Sie sind bereits angemeldet.");
+            return "redirect:/403";  // Weiterleitung zur 403-Fehlerseite
+        }
         model.addAttribute("user", new UserDTO()); // Ein leeres User-Objekt hinzufügen
         System.out.println("Register method called"); // Protokollausgabe
         return "register"; // Das Template "register.html" wird geladen
@@ -80,6 +88,7 @@ public class RadiologyxController {
             if (!userDTO.getFirstName().matches("[A-ZÄÖÜ][a-zäöüß]*") || !userDTO.getLastName().matches("[A-ZÄÖÜ][a-zäöüß]*")) {
                 redirectAttributes.addFlashAttribute("errorMessage",
                         "Bitte geben Sie einen gültigen Vor- und Nachnamen ein (Großbuchstaben am Anfang).");
+
                 return "redirect:/register";
             }
             else {
@@ -122,7 +131,8 @@ public class RadiologyxController {
                                @RequestParam("file") MultipartFile file,
                                Model model) {
         try {
-            befundService.uploadBefund(patientId, arztId, file);
+            LocalDateTime hochgeladenAm = LocalDateTime.now();
+            befundService.uploadBefund(patientId, arztId, file, hochgeladenAm);
             model.addAttribute("successMessage", "Befund wurde erfolgreich hochgeladen.");
         } catch (IOException e) {
             model.addAttribute("errorMessage", "Fehler beim Hochladen des Befunds.");
@@ -169,21 +179,23 @@ public class RadiologyxController {
         }
     }
 
-    @GetMapping("/patient/termine-vereinbaren/{patientId}")
-    public String showAppointmentForm(@PathVariable Long patientId, Model model) {
-        // Patient aus der Datenbank laden
-        User patient = userInterface.findById(patientId).orElse(null);
-//        if (patient == null) {
-//            model.addAttribute("errorMessage", "Patient nicht gefunden.");
-//            return "error";  // Optional: Fehlerseite
-//        }
+    @GetMapping("/patient/termine-vereinbaren")
+    public String showAppointmentForm(Model model, Principal principal) {
+        // Angemeldeten Benutzer abrufen
+        User patient = userInterface.findByUsername(principal.getName());
+        if (patient == null) {
+            model.addAttribute("errorMessage", "Patient nicht gefunden.");
+            return "error";
+        }
+
         model.addAttribute("availableDates", getAvailableDates());
         model.addAttribute("appointment", new Appointment());
-        model.addAttribute("patientId", patientId);  // PatientId hinzufügen
-        model.addAttribute("patient", patient);  // Patient zum Modell hinzufügen
+        model.addAttribute("patientId", patient.getId());
+        model.addAttribute("patient", patient);
 
-        return "termine-vereinbaren";  // Dein Template für Termine
+        return "termine-vereinbaren";
     }
+
 
     // Verfügbare Zeiten für ein ausgewähltes Datum abrufen
     @GetMapping("/patient/get-timeslots")
@@ -211,7 +223,12 @@ public class RadiologyxController {
         Arzt arzt = arztService.findById(1L);  // Beispiel: Es gibt nur einen Arzt mit ID 1
         appointmentService.createAppointment(patient, arzt, dateTime);
         model.addAttribute("successMessage", "Termin erfolgreich erstellt.");
-        return "redirect:/patient/termine-vereinbaren";
+        return "redirect:/termine-vereinbaren-success";  // Weiterleitung zur success Seite
+    }
+
+    @GetMapping("/termine-vereinbaren-success")
+    private String terminsuccess() {
+        return "termine-vereinbaren-success";
     }
 
 
@@ -240,5 +257,7 @@ public class RadiologyxController {
         }
         return timeslots;
     }
+
+
 }
 

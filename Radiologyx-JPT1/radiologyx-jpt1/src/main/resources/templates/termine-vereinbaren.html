@@ -1,11 +1,39 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Termine Vereinbaren</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link th:href = "@{/css/style.css}" rel="stylesheet">
 </head>
 <body>
+<div class="logo-container">
+    <a th:href="@{/}"><img th:src="@{/images/logo2.png}"></a>
+    <span class="logo-text">MedConnect</span>
+</div>
+
+<nav>
+    <ul>
+        <li><a th:href="@{/}">Startseite</a></li> <!-- Korrektes th:href -->
+        <li sec:authorize="!isAuthenticated()"><a th:href="@{/register}">Registrieren</a></li>
+        <li sec:authorize="!isAuthenticated()"><a th:href="@{/login}">Login</a></li>
+        <li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li>
+        <li><a th:href="@{/impressum}">Impressum</a></li>
+        <li th:if="${#authorization.expression('hasRole(''ARZT'')')}">
+            <a th:href="@{/arzt/befunde-patientenliste}">Befunde hochladen</a> <!-- patientenliste soll zuerst angezeigt werden und danch ahref auf befund hochladen für den jeewiligen patienten-->
+        </li>
+        <li th:if="${#authorization.expression('hasRole(''ARZT'')')}">
+            <a th:href="@{/arzt/termine-einsehen}">Termine einsehen</a>
+        </li>
+        <li th:if="${#authorization.expression('hasRole(''PATIENT'')')}">
+            <a th:href="@{/patient/termine-vereinbaren}">Termin Vereinbaren</a>
+        </li>
+        <li th:if="${#authorization.expression('hasRole(''PATIENT'')')}">
+            <a th:href="@{/patient/befunde-einsehen}">Befunde einsehen</a>
+        </li>
+    </ul>
+</nav>
+
 <h2>Termine Vereinbaren</h2>
 
 <!-- Übergabe des patientId-Parameters -->
@@ -21,6 +49,7 @@
     </select>
 
     <button type="submit">Termin Vereinbaren</button>
+
 </form>
 
 <script>
