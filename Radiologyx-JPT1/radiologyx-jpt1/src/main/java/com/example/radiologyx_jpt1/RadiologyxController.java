@@ -59,10 +59,13 @@ public class RadiologyxController {
 
     // Login-Seite
     @GetMapping("/login")
-    public String login(Model model, Principal principal) {
+    public String login(Model model, Principal principal, @RequestParam(value = "error", required = false) String error ) {
         if (principal != null) {
             model.addAttribute("errorMessage", "Sie sind bereits angemeldet.");
             return "redirect:/404";  // Weiterleitung zur 403-Fehlerseite
+        }
+        if (error != null) {
+            model.addAttribute("errorMessage", "Ungültiger Benutzername oder Passwort.");
         }
         model.addAttribute("user", new User()); // User ist deine Klasse für das Login
         return "login"; // Name des Templates ohne .html
@@ -92,6 +95,10 @@ public class RadiologyxController {
         // Validierung der Sozialversicherungsnummer (Optional, je nach den Anforderungen)
         if (userDTO.getSvnr() <= 0 || String.valueOf(userDTO.getSvnr()).length() != 9) {
             redirectAttributes.addFlashAttribute("errorMessage", "Bitte geben Sie eine gültige Sozialversicherungsnummer ein.");
+            return "redirect:/register";
+        }
+        if (!userDTO.getPassword().equals(userDTO.getConfirmPassword())) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Die Passwörter stimmen nicht überein!");
             return "redirect:/register";
         }
             userService.save(userDTO); // Existierende Methode "save" verwenden

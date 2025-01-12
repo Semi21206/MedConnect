@@ -47,6 +47,7 @@ public class SecurityConfig {
                 .formLogin(form -> form
                         .loginPage("/login")
                         .loginProcessingUrl("/login")
+                        .failureUrl("/login?error=true") // Bei Fehler zu dieser URL weiterleiten
                         .defaultSuccessUrl("/", true) // Hier zur Hauptseite weiterleiten
                         .permitAll()
                 )
