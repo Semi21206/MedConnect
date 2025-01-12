@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  # Spring Boot Application
+  radiologyx-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://radiologyx-db:3306/radiologyx_schema
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: zakir1234
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+    depends_on:
+      - radiologyx-db
+
+  # MySQL Database
+  radiologyx-db:
+    image: mysql:8.0
+    container_name: radiologyx-db
+    ports:
+      - "3307:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=zakir1234
+      - MYSQL_DATABASE=radiologyx_schema
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:
