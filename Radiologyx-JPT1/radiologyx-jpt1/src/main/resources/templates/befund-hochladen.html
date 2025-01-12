@@ -3,45 +3,124 @@
 <head>
     <meta charset="UTF-8">
     <title>Befund hochladen</title>
-    <link th:href="@{/css/style.css}" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600&display=swap">
+    <!-- Font Awesome for Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+        }
 
+        nav {
+            background-color: #007bff;
+        }
+
+        .navbar-brand {
+            font-size: 1.8rem;
+            color: white;
+            font-weight: bold;
+        }
+
+        .navbar-nav .nav-link {
+            font-size: 1.1rem;
+            color: white !important;
+        }
+
+        .navbar-nav .nav-item.active .nav-link, .navbar-nav .nav-link:hover {
+            background-color: #0056b3;
+            border-radius: 5px;
+        }
+
+        .befund-hochladen-h {
+            padding: 30px;
+            text-align: center;
+            color: #007bff;
+        }
+
+        .drag-drop-container {
+            border: none;
+            border-radius: 8px;
+            background: #f0f8ff;
+            transition: all 0.3s ease-in-out;
+            cursor: pointer;
+            font-size: 1.2rem;
+            width: 100%;
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            flex-direction: column;
+        }
+
+        .drag-drop-container:hover {
+            background: #e3f2fd;
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(0, 123, 255, 0.3);
+        }
+
+        .folder-icon {
+            font-size: 4rem;
+            color: #007bff;
+            margin-bottom: 10px;
+        }
+
+        .drag-drop-text {
+            font-size: 1rem;
+            color: #007bff;
+            font-weight: bold;
+        }
+
+        .file-info {
+            margin-top: 15px;
+            font-size: 1rem;
+            color: #007bff;
+        }
+
+        .btn-center {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .btn-primary {
+            padding: 10px 30px;
+            font-size: 1rem;
+        }
+    </style>
 </head>
 <body>
 
-<div class="logo-container">
-    <a th:href="@{/}"><img th:src="@{/images/logo2.png}"></a>
-    <span class="logo-text">MedConnect</span>
-</div>
-
-<nav>
-    <ul>
-        <li><a th:href="@{/}">Startseite</a></li> <!-- Korrektes th:href -->
-        <li sec:authorize="!isAuthenticated()"><a th:href="@{/register}">Registrieren</a></li>
-        <li sec:authorize="!isAuthenticated()"><a th:href="@{/login}">Login</a></li>
-        <li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li>
-        <li><a th:href="@{/impressum}">Impressum</a></li>
-        <li th:if="${#authorization.expression('hasRole(''ARZT'')')}">
-            <a th:href="@{/arzt/befunde-patientenliste}">Befunde hochladen</a> <!-- patientenliste soll zuerst angezeigt werden und danch ahref auf befund hochladen für den jeewiligen patienten-->
-        </li>
-        <li th:if="${#authorization.expression('hasRole(''ARZT'')')}">
-            <a th:href="@{/arzt/termine-einsehen}">Termine einsehen</a>
-        </li>
-        <li th:if="${#authorization.expression('hasRole(''PATIENT'')')}">
-            <a th:href="@{/patient/termine-vereinbaren}">Termin Vereinbaren</a>
-        </li>
-        <li th:if="${#authorization.expression('hasRole(''PATIENT'')')}">
-            <a th:href="@{/patient/befunde-einsehen}">Befunde einsehen</a>
-        </li>
-    </ul>
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg">
+    <div class="container">
+        <a class="navbar-brand" th:href="@{/}">MedConnect</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" th:href="@{/}">Startseite</a></li>
+                <li class="nav-item" sec:authorize="!isAuthenticated()"><a class="nav-link" th:href="@{/register}">Registrieren</a></li>
+                <li class="nav-item" sec:authorize="!isAuthenticated()"><a class="nav-link" th:href="@{/login}">Login</a></li>
+                <li class="nav-item" sec:authorize="isAuthenticated()"><a class="nav-link" th:href="@{/logout}">Logout</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/impressum}">Impressum</a></li>
+                <li class="nav-item" th:if="${#authorization.expression('hasRole(''ARZT'')')}"><a class="nav-link" th:href="@{/arzt/befunde-patientenliste}">Befunde hochladen</a></li>
+                <li class="nav-item" th:if="${#authorization.expression('hasRole(''ARZT'')')}"><a class="nav-link" th:href="@{/arzt/termine-einsehen}">Termine einsehen</a></li>
+                <li class="nav-item" th:if="${#authorization.expression('hasRole(''PATIENT'')')}"><a class="nav-link" th:href="@{/patient/termine-vereinbaren}">Termin Vereinbaren</a></li>
+                <li class="nav-item" th:if="${#authorization.expression('hasRole(''PATIENT'')')}"><a class="nav-link" th:href="@{/patient/befunde-einsehen}">Befunde einsehen</a></li>
+            </ul>
+        </div>
+    </div>
 </nav>
 
 <div class="befund-hochladen-h">
     <h1>Befund hochladen für Patient: <span th:text="${patient.firstName + ' ' + patient.lastName}"></span></h1>
 </div>
 
-<div class="befund-hochladen-container">
-    <div class ="befund-hochladen-container-c">
-
+<div class="container mt-5">
     <form method="post" enctype="multipart/form-data" th:action="@{/arzt/befund-hochladen/{patientId}(patientId=${patient.id})}" id="uploadForm">
         <input type="hidden" name="patientId" th:value="${patient.id}" />
         <input type="hidden" name="arztId" value="1">
@@ -49,18 +128,21 @@
 
         <!-- Drag and Drop Container -->
         <div class="drag-drop-container" id="dragDropContainer" onclick="document.getElementById('fileInput').click()">
+            <i class="fas fa-folder folder-icon"></i> <!-- Font Awesome Folder Icon -->
             <label for="fileInput" class="drag-drop-text">
                 Ziehen Sie Ihre Datei hierher oder klicken Sie, um eine Datei auszuwählen
             </label>
-            <input type="file" name="file" id="fileInput" onchange="updateFileName()" />
+            <input type="file" name="file" id="fileInput" style="display: none;" onchange="updateFileName()" />
         </div>
 
         <!-- Anzeige der ausgewählten Datei -->
         <div class="file-info" id="fileInfo"></div>
 
-        <button type="submit" class="upload-button">Befund hochladen</button>
+        <!-- Zentrierter Button -->
+        <div class="btn-center">
+            <button type="submit" class="btn btn-primary">Befund hochladen</button>
+        </div>
     </form>
-    </div>
 </div>
 
 <script>
@@ -68,41 +150,33 @@
     const fileInput = document.getElementById('fileInput');
     const fileInfo = document.getElementById('fileInfo');
 
-    // Verhindert das Standardverhalten (Dateien öffnen)
     dragDropContainer.addEventListener('dragover', (event) => {
         event.preventDefault();
-        dragDropContainer.style.backgroundColor = '#f1fdf3'; // Highlight auf Hover
-        dragDropContainer.style.borderColor = '#388e3c'; // Hervorhebung der Rahmenfarbe
+        dragDropContainer.style.backgroundColor = '#e3f2fd';
     });
 
-    // Wenn die Datei losgelassen wird
+    dragDropContainer.addEventListener('dragleave', () => {
+        dragDropContainer.style.backgroundColor = '#f0f8ff';
+    });
+
     dragDropContainer.addEventListener('drop', (event) => {
         event.preventDefault();
-        dragDropContainer.style.backgroundColor = ''; // Entferne Highlight
-        dragDropContainer.style.borderColor = '#4CAF50'; // Standardfarbe zurücksetzen
-        const files = event.dataTransfer.files; // Holen der Datei(en)
+        dragDropContainer.style.backgroundColor = '#f0f8ff';
+        const files = event.dataTransfer.files;
         if (files.length > 0) {
-            fileInput.files = files; // Setzt die Datei im Input-Feld
-            updateFileName(); // Aktualisiert den Dateinamen im Label
+            fileInput.files = files;
+            updateFileName();
         }
     });
 
-    // Wenn Drag-and-Drop das Dragging beendet
-    dragDropContainer.addEventListener('dragleave', () => {
-        dragDropContainer.style.backgroundColor = ''; // Entferne Highlight, wenn der Benutzer die Maus verlässt
-        dragDropContainer.style.borderColor = '#4CAF50'; // Standardfarbe zurücksetzen
-    });
-
-    // Aktualisiert die Anzeige des Dateinamens nach Auswahl
     function updateFileName() {
         const fileName = fileInput.files[0] ? fileInput.files[0].name : '';
-        if (fileName) {
-            fileInfo.innerHTML = `Ausgewählte Datei: <span>${fileName}</span>`;
-        } else {
-            fileInfo.textContent = ''; // Wenn keine Datei ausgewählt, nichts anzeigen
-        }
+        fileInfo.textContent = fileName ? `Ausgewählte Datei: ${fileName}` : '';
     }
 </script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
 
 </body>
 </html>

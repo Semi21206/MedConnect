@@ -2,7 +2,7 @@ nav {
     height: 46px;
     width: 85%;
     margin-left: 15%;
-    background: linear-gradient(to right, #4ECCA3, darkturquoise);-->
+    background: blue; /*linear-gradient(to right, #4ECCA3, darkturquoise);*/
     border-radius: 3px;
 }
 
@@ -504,7 +504,7 @@ index---------------------------------------------------------------------------
     font-weight: bold;
     font-family: 'Nunito', sans-serif;
     border-bottom: 2px solid #ddd;
-    width: 25%;
+    width: 20%;
 }
 
 

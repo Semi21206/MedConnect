@@ -1,139 +1,131 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
-
 <head>
     <meta charset="UTF-8">
-    <title>Impressum</title>
-    <link th:href = "@{/css/style.css}" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Impressum | MedConnect</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600&display=swap">
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        nav {
+            background-color: #007bff;
+        }
+        .navbar-brand {
+            font-size: 1.8rem;
+            color: white;
+            font-weight: bold;
+        }
+        .navbar-nav .nav-link {
+            font-size: 1.1rem;
+            color: white !important;
+            padding: 10px 15px;
+        }
+        .navbar-nav .nav-link:hover {
+            background-color: #0056b3;
+            color: #fff !important;
+            border-radius: 5px;
+        }
+        .content {
+            padding: 30px;
+        }
+        .section-title {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #007bff;
+        }
+        .section-title h1 {
+            font-size: 2.5rem;
+        }
+        .impressum-content {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .impressum-content h2 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #007bff;
+        }
+        .impressum-content p, .impressum-content li {
+            font-size: 1rem;
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
 <body>
-<div class="logo-container">
-    <a th:href="@{/}"><img th:src="@{/images/logo2.png}"></a>
-    <span class="logo-text">MedConnect</span>
-</div>
+<!-- Navigation -->
 
-<nav>
-    <ul>
-        <li><a th:href="@{/}">Startseite</a></li> <!-- Korrektes th:href -->
-        <li sec:authorize="!isAuthenticated()"><a th:href="@{/register}">Registrieren</a></li>
-        <li sec:authorize="!isAuthenticated()"><a th:href="@{/login}">Login</a></li>
-        <li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li>
-        <li><a th:href="@{/impressum}">Impressum</a></li>
-        <li th:if="${#authorization.expression('hasRole(''ARZT'')')}">
-            <a th:href="@{/arzt/befunde-patientenliste}">Befunde hochladen</a> <!-- patientenliste soll zuerst angezeigt werden und danch ahref auf befund hochladen für den jeewiligen patienten-->
-        </li>
-        <li th:if="${#authorization.expression('hasRole(''ARZT'')')}">
-            <a th:href="@{/arzt/termine-einsehen}">Termine einsehen</a>
-        </li>
-        <li th:if="${#authorization.expression('hasRole(''PATIENT'')')}">
-            <a th:href="@{/patient/termine-vereinbaren}">Termin Vereinbaren</a>
-        </li>
-        <li th:if="${#authorization.expression('hasRole(''PATIENT'')')}">
-            <a th:href="@{/patient/befunde-einsehen}">Befunde einsehen</a>
-        </li>
-    </ul>
+<nav class="navbar navbar-expand-lg">
+    <div class="container">
+        <a class="navbar-brand" th:href="@{/}">MedConnect</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" th:href="@{/}">Startseite</a></li>
+                <li class="nav-item" sec:authorize="!isAuthenticated()"><a class="nav-link" th:href="@{/register}">Registrieren</a></li>
+                <li class="nav-item" sec:authorize="!isAuthenticated()"><a class="nav-link" th:href="@{/login}">Login</a></li>
+                <li class="nav-item" sec:authorize="isAuthenticated()"><a class="nav-link" th:href="@{/logout}">Logout</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/impressum}">Impressum</a></li>
+                <li class="nav-item" th:if="${#authorization.expression('hasRole(''ARZT'')')}"><a class="nav-link" th:href="@{/arzt/befunde-patientenliste}">Befunde hochladen</a></li>
+                <li class="nav-item" th:if="${#authorization.expression('hasRole(''ARZT'')')}"><a class="nav-link" th:href="@{/arzt/termine-einsehen}">Termine einsehen</a></li>
+                <li class="nav-item" th:if="${#authorization.expression('hasRole(''PATIENT'')')}"><a class="nav-link" th:href="@{/patient/termine-vereinbaren}">Termin Vereinbaren</a></li>
+                <li class="nav-item" th:if="${#authorization.expression('hasRole(''PATIENT'')')}"><a class="nav-link" th:href="@{/patient/befunde-einsehen}">Befunde einsehen</a></li>
+            </ul>
+        </div>
+    </div>
 </nav>
 
-
-<div class ="impressum-form">
-
-    <div class="impressum-title">
+<!-- Content Section -->
+<div class="container content">
+    <div class="section-title">
         <h1>Impressum</h1>
     </div>
-    <b> Angaben gemäß § 5 TMG:</b>
-    <br><br>
-    Zakir Barang <br>
-    Donaustrasse 14<br>
-    2403 Wildungsmauer<br>
-    Österreich<br>
-    <br>
-    Telefon: +43 67761784753
-    E-Mail: bar210486@spengergasse.at
-    <br><br>
-    <b>Vertreten durch: <br></b>
-    • Zakir Barang<br>
-    • Semi Slimeni<br>
-    • Filip Condric<br>
-    • Montassar Chrigui
-    <br><br>
-    <b>Haftungshinweis:</b>
-    <br><br>
-    Trotz sorgfältiger inhaltlicher Kontrolle übernehmen wir keine Haftung für die Inhalte externer Links. Für den Inhalt der verlinkten Seiten sind ausschließlich deren Betreiber verantwortlich.
-    <br><br>
-    <b>Urheberrechtshinweis:</b>
-    <br><br>
-    Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechts bedürfen der schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers. Downloads und Kopien dieser Seite sind nur für den privaten, nicht kommerziellen Gebrauch gestattet.
-    <br><br>
-        <b>Datenschutzerklärung:</b>
-    <br><br>
-    Diese Datenschutzerklärung klärt Sie über die Art, den Umfang und Zweck der Verarbeitung von personenbezogenen Daten im Rahmen der Nutzung unserer Webseite und der damit verbundenen Funktionen, insbesondere der Registrierung, Anmeldung und des Hochladens von Bildern, auf.
-    <br><br>
-    <b>1. Verantwortliche Stelle</b>
-    <br><br>
-    Verantwortliche Stelle für die Datenverarbeitung auf dieser Website ist:
-    <br>
-    • Zakir Barang <br>
-    • Donaustrasse 14<br>
-    • 2403 Wildungsmauer<br>
-    • E-Mail: bar210468@spengergasse.at<br>
-    <br><br>
-    <b>2. Art der verarbeiteten Daten</b>
-    <br><br>
-    Im Rahmen der Nutzung unserer Webseite verarbeiten wir folgende personenbezogene Daten:
-    <br><br>
-    • Registrierungsdaten (z. B. Vollen Name, Geschlecht, Passwort)<br>
-    • Anmeldedaten (z. B. Benutzername, Passwort)<br>
-    • Hochgeladene Bilder (inkl. der darin enthaltenen Meta-Daten)<br><br>
 
-    <b>3. Nutzung nur mit Registrierung und Anmeldung<br></b>
-    <br><br>
-    Unsere Webseite und die angebotenen Funktionen, wie z. B. das Hochladen von Bildern, stehen ausschließlich registrierten und angemeldeten Nutzern zur Verfügung. Eine anonyme Nutzung der Seite ist nicht möglich. Bei der Registrierung und Anmeldung erfassen wir die erforderlichen personenbezogenen Daten, um Ihnen den Zugang zu den Funktionen der Webseite zu ermöglichen.
-    <br><br>
-    <b>4. Zweck der Verarbeitung</b>
-    <br><br>
-    Die Verarbeitung der personenbezogenen Daten erfolgt zu folgenden Zwecken:
-    <br><br>
-    • Bereitstellung der Website und ihrer Funktionen (Registrierung, Anmeldung, Bilder hochladen)<br>
-    • Sicherstellung der Sicherheit der Website<br>
-    • Verbesserung der Nutzererfahrung<br>
-    • Die Verarbeitung erfolgt auf Grundlage des Art. 6 Abs. 1 lit. b DSGVO zur Erfüllung eines Vertrags bzw. zur Durchführung vorvertraglicher Maßnahmen, die auf Ihre Anfrage hin erfolgen.<br>
-    <br><br>
-    <b>5. Hochladen von Bildern</b>
-    <br><br>
-    Die Funktion zum Hochladen von Bildern erfordert die Verarbeitung der von Ihnen zur Verfügung gestellten Daten, einschließlich der Bilddateien und eventuell darin enthaltener Meta-Daten. Die Bilder werden auf unserem Server gespeichert und können im Rahmen der Nutzung unserer Dienste veröffentlicht werden.
-    <br><br>
-    <b>6. Weitergabe von Daten</b>
-    <br><br>
-    Ihre personenbezogenen Daten werden nicht ohne Ihre ausdrückliche Einwilligung an Dritte weitergegeben, es sei denn, dies ist zur Erfüllung eines Vertrages erforderlich oder wir sind gesetzlich dazu verpflichtet.
-    <br><br>
-    <b>7. Sicherheit Ihrer Daten</b>
-    <br><br>
-    Wir ergreifen geeignete technische und organisatorische Maßnahmen, um Ihre personenbezogenen Daten vor Verlust, Missbrauch oder unbefugtem Zugriff zu schützen.
-    <br><br>
-    <b>8. Speicherdauer</b>
-    <br><br>
-    Wir speichern Ihre personenbezogenen Daten nur so lange, wie dies für die Bereitstellung unserer Dienste erforderlich ist oder wir gesetzlich dazu verpflichtet sind.
-    <br><br>
-    <b> 9. Ihre Rechte </b>
-    <br><br>
-    <b>Sie haben jederzeit das Recht: </b>wgf
-    h <dtz78+#
-    <br><br>
-    • auf Auskunft über die gespeicherten Daten (Art. 15 DSGVO),<br>
-    • auf Berichtigung unrichtiger Daten (Art. 16 DSGVO),<br>
-    • auf Löschung Ihrer Daten (Art. 17 DSGVO),<br>
-    • auf Einschränkung der Verarbeitung (Art. 18 DSGVO),<br>
-    • auf Widerspruch gegen die Datenverarbeitung (Art. 21 DSGVO),<br>
-    • auf Datenübertragbarkeit (Art. 20 DSGVO).<br>
-    <br><br>
-    <b> 10. Änderungen der Datenschutzerklärung </b>
-    <br><br>
-    Wir behalten uns das Recht vor, diese Datenschutzerklärung anzupassen, um sie an aktuelle rechtliche Anforderungen oder an Änderungen unserer Dienste anzupassen. Für Ihren erneuten Besuch gilt die jeweils aktuelle Datenschutzerklärung.
-    <br><br>
-    <b>Kontakt für Datenschutzfragen:<br>
-    E-Mail: bar210468@spengergasse.at<br>
-        Telefon: +43 67761784753<br> </b>
+    <div class="impressum-content">
+        <h2>Angaben gemäß § 5 TMG:</h2>
+        <p>Zakir Barang<br>
+            Donaustrasse 14<br>
+            2403 Wildungsmauer<br>
+            Österreich<br>
+            Telefon: +43 67761784753<br>
+            E-Mail: bar210486@spengergasse.at
+        </p>
+
+        <h2>Vertreten durch:</h2>
+        <ul>
+            <li>Zakir Barang</li>
+            <li>Semi Slimeni</li>
+            <li>Filip Condric</li>
+            <li>Montassar Chrigui</li>
+        </ul>
+
+        <h2>Haftungshinweis:</h2>
+        <p>
+            Trotz sorgfältiger inhaltlicher Kontrolle übernehmen wir keine Haftung für die Inhalte externer Links.
+            Für den Inhalt der verlinkten Seiten sind ausschließlich deren Betreiber verantwortlich.
+        </p>
+
+        <h2>Urheberrechtshinweis:</h2>
+        <p>
+            Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen
+            Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der
+            Grenzen des Urheberrechts bedürfen der schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers.
+            Downloads und Kopien dieser Seite sind nur für den privaten, nicht kommerziellen Gebrauch gestattet.
+        </p>
+    </div>
 </div>
 
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 </body>
 </html>

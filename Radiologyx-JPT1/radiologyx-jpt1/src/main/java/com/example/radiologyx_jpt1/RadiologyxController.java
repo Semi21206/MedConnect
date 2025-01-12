@@ -87,17 +87,19 @@ public class RadiologyxController {
             if (!userDTO.getFirstName().matches("[A-ZÄÖÜ][a-zäöüß]*") || !userDTO.getLastName().matches("[A-ZÄÖÜ][a-zäöüß]*")) {
                 redirectAttributes.addFlashAttribute("errorMessage",
                         "Bitte geben Sie einen gültigen Vor- und Nachnamen ein (Großbuchstaben am Anfang).");
-
                 return "redirect:/register";
             }
-            else {
-                userService.save(userDTO); // Existierende Methode "save" verwenden
-                // Benutzer registrieren
-                // Erfolgsmeldung
-                model.addAttribute("successMessage", "Registrierung war erfolgreich");
-                return "login"; // Nach erfolgreicher Registrierung zur Login-Seite weiterleiten
+        // Validierung der Sozialversicherungsnummer (Optional, je nach den Anforderungen)
+        if (userDTO.getSvnr() <= 0 || String.valueOf(userDTO.getSvnr()).length() != 9) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Bitte geben Sie eine gültige Sozialversicherungsnummer ein.");
+            return "redirect:/register";
         }
-    }
+            userService.save(userDTO); // Existierende Methode "save" verwenden
+            // Benutzer registrieren
+            // Erfolgsmeldung
+            model.addAttribute("successMessage", "Registrierung war erfolgreich");
+            return "login"; // Nach erfolgreicher Registrierung zur Login-Seite weiterleiten
+        }
 
     // Impressum-Seite
     @Controller
@@ -130,7 +132,8 @@ public class RadiologyxController {
                                @RequestParam("file") MultipartFile file,
                                Model model) {
         try {
-            LocalDateTime hochgeladenAm = LocalDateTime.now();
+            LocalDateTime now = LocalDateTime.now();
+            LocalDateTime hochgeladenAm = now.plusHours(1); //wegen west europa azure
             befundService.uploadBefund(patientId, arztId, file, hochgeladenAm);
             model.addAttribute("successMessage", "Befund wurde erfolgreich hochgeladen.");
         } catch (IOException e) {
@@ -139,7 +142,12 @@ public class RadiologyxController {
         User patient = userInterface.findById(patientId).orElse(null);
         model.addAttribute("patient", patient);
 
-        return "befund-hochladen";  // Zurück zur Upload-Seite
+        return "befund-hochladen-success";  // Zurück zur Upload-Seite
+    }
+
+    @GetMapping("/befund-hochladen-success")
+    public String showSuccessPage() {
+        return "befund-hochladen-success"; // Name der Success-Seite (upload-success.html)
     }
 
     @GetMapping("/arzt/termine-einsehen")

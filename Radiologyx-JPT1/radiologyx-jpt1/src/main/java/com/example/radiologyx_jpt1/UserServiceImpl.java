@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService {
         }
         String role = "ROLE_PATIENT";
         User user = new User(userDto.getUsername(), userDto.getFirstName(), userDto.getLastName(),
-        userDto.getGender(), passwordEncoder.encode(userDto.getPassword()), role);
+        userDto.getGender(),userDto.getSvnr(), passwordEncoder.encode(userDto.getPassword()), role);
         return userRepository.save(user);
     }
 

@@ -6,20 +6,30 @@ public class UserDTO {
     private String lastName;
     private String gender;
     private String role;
+    private int svnr;
     private String password;
     private String confirmPassword;
 
     public UserDTO() {
     }
 
-    public UserDTO(String username, String firstName, String lastName, String gender, String role, String password, String confirmPassword) {
+    public UserDTO(String username, String firstName, String lastName, String gender, String role, int  svnr, String password, String confirmPassword) {
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
         this.role = role;
+        this.svnr = svnr;
         this.password = password;
         this.confirmPassword = confirmPassword;
+    }
+
+    public int getSvnr() {
+        return svnr;
+    }
+
+    public void setSvnr(int svnr) {
+        this.svnr = svnr;
     }
 
     @Override
@@ -29,6 +39,7 @@ public class UserDTO {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", gender='" + gender + '\'' +
+                ", svnr='" + svnr + '\'' +
                 ", password='" + password + '\'' +
                 ", confirmPassword='" + confirmPassword + '\'' +
                 '}';

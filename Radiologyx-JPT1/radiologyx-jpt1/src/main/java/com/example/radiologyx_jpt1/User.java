@@ -16,6 +16,28 @@ public class User {
     private String lastName;
     @Column(name = "u_gender")
     private String gender;
+    @Column(name = "u_svnr")
+    private int svnr;
+
+    public int getSvnr() {
+        return svnr;
+    }
+
+    public void setSvnr(int svnr) {
+        this.svnr = svnr;
+    }
+
+    public User(Long id, String username, String firstName, String lastName, String gender, int svnr, String password, String role) {
+        this.id = id;
+        this.username = username;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.gender = gender;
+        this.svnr = svnr;
+        this.password = password;
+        this.role = role;
+    }
+
     @Column(name = "u_password")
     private String password;
     @Column(name = "u_role", nullable = false)  // Neue Spalte für die Rolle
@@ -23,11 +45,12 @@ public class User {
     public User() {
     }
 
-    public User(String username, String firstName, String lastName, String gender, String password, String role) {
+    public User(String username, String firstName, String lastName, String gender, int svnr, String password, String role) {
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
+        this.svnr = svnr;
         this.password = password;
         this.role = role;
     }
