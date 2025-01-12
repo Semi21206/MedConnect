@@ -166,7 +166,7 @@ public class RadiologyxController {
     @GetMapping("/download/{dateiname}")
     public ResponseEntity<FileSystemResource> downloadBefund(@PathVariable String dateiname) {
         try {
-            Path filePath = Paths.get("src/main/resources/uploads/" + dateiname);
+            Path filePath = Paths.get(System.getProperty("user.dir") + "/src/main/resources/uploads/" + dateiname); //Path filePath = Paths.get(System.getProperty("user.dir") + "/src/main/resources/uploads/" + dateiname); vewrwenden dann auf VM
             FileSystemResource fileResource = new FileSystemResource(filePath);
 
             HttpHeaders headers = new HttpHeaders();
