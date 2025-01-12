@@ -2,7 +2,6 @@ package com.example.radiologyx_jpt1;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -164,20 +163,35 @@ public class RadiologyxController {
 
 
     @GetMapping("/download/{dateiname}")
-    public ResponseEntity<FileSystemResource> downloadBefund(@PathVariable String dateiname) {
+    public ResponseEntity<?> downloadBefund(@PathVariable String dateiname) {
         try {
-            Path filePath = Paths.get(System.getProperty("user.dir") + "/src/main/resources/uploads/" + dateiname); //Path filePath = Paths.get(System.getProperty("user.dir") + "/src/main/resources/uploads/" + dateiname); vewrwenden dann auf VM
+            // Absoluter Pfad zur Datei im Upload-Verzeichnis
+            Path filePath = Paths.get(System.getProperty("user.dir") + "/src/main/resources/uploads/" + dateiname);
+
+            // Überprüfen, ob die Datei existiert
+            if (!filePath.toFile().exists()) {
+                return ResponseEntity.notFound().build(); // Datei wurde nicht gefunden
+            }
+
+            // Datei als FileSystemResource
             FileSystemResource fileResource = new FileSystemResource(filePath);
 
+            // Header für den Download setzen
             HttpHeaders headers = new HttpHeaders();
             headers.add("Content-Disposition", "attachment; filename=" + dateiname);
+            headers.add("Content-Type", "application/pdf");  // Content-Type für PDF
 
+            // Rückgabe der ResponseEntity mit den Headern und der Datei
             return new ResponseEntity<>(fileResource, headers, HttpStatus.OK);
+
         } catch (Exception e) {
-            // Fehlerbehandlung, falls die Datei nicht gefunden wird
-            return ResponseEntity.notFound().build();
+            // Fehlerbehandlung, falls etwas schiefgeht
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Fehler beim Herunterladen der Datei.");
         }
     }
+
+
 
     @GetMapping("/patient/termine-vereinbaren")
     public String showAppointmentForm(Model model, Principal principal) {
