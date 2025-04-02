@@ -29,6 +29,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf
+                        .ignoringRequestMatchers("/api/**") // CSRF für API-Endpunkte deaktivieren
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()) // Optional: Cookie CSRF-Token verwenden
                 )
                 .authorizeHttpRequests(authorize -> authorize
@@ -39,6 +40,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/arzt/befund-hochladen").hasRole("ARZT")
                         .requestMatchers(HttpMethod.POST, "/arzt/befund-hochladen").hasRole("ARZT")
                         .requestMatchers("/arzt/termine-einsehen").hasRole("ARZT") // Nur für Ärzte
+
                         //PATIENT
                         .requestMatchers("/patient/befunde-einsehen").hasRole("PATIENT")   // Nur Patienten dürfen auf "/patient/befunde-einsehen" zugreifen
                         .requestMatchers("/patient/termine-vereinbaren").hasRole("PATIENT")   // Nur Patienten dürfen auf "/patient/termine-vereinbaren.html" zugreifen

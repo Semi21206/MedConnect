@@ -1,0 +1,48 @@
+Last login: Mon Dec  9 09:11:00 on ttys004
+zakirbarang@MacBook-Pro-von-Zakir ~ % brew --version
+zsh: command not found: brew
+zakirbarang@MacBook-Pro-von-Zakir ~ % ls /opt/homebrew
+
+Caskroom	bin		lib		share
+Cellar		etc		opt		var
+Frameworks	include		sbin
+zakirbarang@MacBook-Pro-von-Zakir ~ % nano ~/.zshrc
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  UW PICO 5.09            File: /Users/zakirbarang/.zshrc             Modified  
+
+alias python=/usr/bin/python3
+export PATH=${PATH}:/usr/local/mysql-9.0.1-macos14-arm64/bin
+export PATH="/opt/homebrew/bin:$PATH"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+^G Get Help  ^O WriteOut  ^R Read File ^Y Prev Pg   ^K Cut Text  ^C Cur Pos   
+^X Exit      ^J Justify   ^W Where is  ^V Next Pg   ^U UnCut Text^T To Spell  

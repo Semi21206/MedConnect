@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Befunde einsehen</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600&display=swap">
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+        }
+
+        nav {
+            background-color: #007bff;
+        }
+
+        .navbar-brand {
+            font-size: 1.8rem;
+            color: white;
+            font-weight: bold;
+        }
+
+        .navbar-nav .nav-link {
+            font-size: 1.1rem;
+            color: white !important;
+        }
+
+        .navbar-nav .nav-item.active .nav-link,
+        .navbar-nav .nav-link:hover {
+            background-color: #0056b3;
+            border-radius: 5px;
+        }
+
+        .befunde-einsehen-h {
+            text-align: center;
+            margin: 20px 0;
+            color: #007bff;
+        }
+
+        table {
+            width: 80%;
+            max-width: 800px;
+            margin: 0 auto;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #ffffff;
+            border: 2px solid #007bff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #007bff;
+            color: white;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+
+        tbody tr:nth-child(odd) {
+            background-color: #f9f9f9;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #ffffff;
+        }
+
+        tbody tr:hover {
+            background-color: #e3f2fd;
+        }
+
+        td {
+            font-size: 1rem;
+            color: #333;
+        }
+
+        .befunde-einsehen-container {
+            margin-bottom: 50px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg">
+    <div class="container">
+        <a class="navbar-brand" th:href="@{/}">MedConnect</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" th:href="@{/}">Startseite</a></li>
+                <li class="nav-item" sec:authorize="!isAuthenticated()"><a class="nav-link" th:href="@{/register}">Registrieren</a></li>
+                <li class="nav-item" sec:authorize="!isAuthenticated()"><a class="nav-link" th:href="@{/login}">Login</a></li>
+                <li class="nav-item" sec:authorize="isAuthenticated()"><a class="nav-link" th:href="@{/logout}">Logout</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/impressum}">Impressum</a></li>
+                <li class="nav-item" th:if="${#authorization.expression('hasRole(''ARZT'')')}"><a class="nav-link" th:href="@{/arzt/befunde-patientenliste}">Befunde hochladen</a></li>
+                <li class="nav-item" th:if="${#authorization.expression('hasRole(''ARZT'')')}"><a class="nav-link" th:href="@{/arzt/termine-einsehen}">Termine einsehen</a></li>
+                <li class="nav-item" th:if="${#authorization.expression('hasRole(''PATIENT'')')}"><a class="nav-link" th:href="@{/patient/termine-vereinbaren}">Termin Vereinbaren</a></li>
+                <li class="nav-item" th:if="${#authorization.expression('hasRole(''PATIENT'')')}"><a class="nav-link" th:href="@{/patient/befunde-einsehen}">Befunde einsehen</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Titel -->
+<div class="befunde-einsehen-h">
+    <h1>Befunde einsehen</h1>
+</div>
+
+<!-- Tabelle -->
+<div class="befunde-einsehen-container">
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Dateiname</th>
+            <th>Hochgeladen am</th>
+            <th>Aktionen</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="befund : ${befunde}">
+            <td th:text="${befund.id}"></td>
+            <td th:text="${befund.dateiname}"></td>
+            <td th:text="${#temporals.format(befund.hochgeladenAm, 'dd.MM.yyyy HH:mm')}"></td>
+            <td>
+                <a th:href="@{/download/{dateiname}(dateiname=${befund.dateiname})}">Download</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

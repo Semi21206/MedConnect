@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600&display=swap">
     <!-- Font Awesome for Icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <!-- Quill CSS -->
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
     <style>
         body {
             font-family: 'Nunito', sans-serif;
@@ -89,6 +91,44 @@
             padding: 10px 30px;
             font-size: 1rem;
         }
+
+        /* Editor Container Styles */
+        .editor-container {
+            margin-top: 30px;
+        }
+
+        /* Set a minimum height for the editor */
+        .ql-editor {
+            min-height: 200px;
+        }
+
+        #editor {
+            height: 300px; /* Set height for the editor */
+        }
+
+        /* Loading spinner */
+        .spinner-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .spinner-border {
+            width: 3rem;
+            height: 3rem;
+        }
+
+        .alert {
+            margin-top: 20px;
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -121,9 +161,17 @@
 </div>
 
 <div class="container mt-5">
+    <!-- Erfolgs- oder Fehlermeldung -->
+    <div class="alert alert-success" id="successAlert" role="alert">
+        Befund wurde erfolgreich erstellt und hochgeladen.
+    </div>
+    <div class="alert alert-danger" id="errorAlert" role="alert">
+        Ein Fehler ist beim Erstellen oder Hochladen des Befundes aufgetreten.
+    </div>
+
     <form method="post" enctype="multipart/form-data" th:action="@{/arzt/befund-hochladen/{patientId}(patientId=${patient.id})}" id="uploadForm">
-        <input type="hidden" name="patientId" th:value="${patient.id}" />
-        <input type="hidden" name="arztId" value="1">
+        <input type="hidden" name="patientId" th:value="${patient.id}" id="patientId" />
+        <input type="hidden" name="arztId" value="1" id="arztId">
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 
         <!-- Drag and Drop Container -->
@@ -143,36 +191,124 @@
             <button type="submit" class="btn btn-primary">Befund hochladen</button>
         </div>
     </form>
+
+    <!-- Quill Text Editor für Befund -->
+    <div class="editor-container">
+        <h3>Erstellen Sie Ihren Befund</h3>
+        <div id="editor"></div>
+        <div class="btn-center">
+            <button id="generatePdfButton" class="btn btn-primary mt-3">PDF generieren und hochladen</button>
+        </div>
+    </div>
+
+    <!-- Loading spinner -->
+    <div class="spinner-container" id="loadingSpinner">
+        <div class="spinner-border text-light" role="status">
+            <span class="visually-hidden">Lädt...</span>
+        </div>
+    </div>
 </div>
 
+<!-- Quill JS Script, sicherstellen, dass es am Ende geladen wird -->
+<script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
 <script>
-    const dragDropContainer = document.getElementById('dragDropContainer');
-    const fileInput = document.getElementById('fileInput');
-    const fileInfo = document.getElementById('fileInfo');
+    // Dateinamen anzeigen, wenn eine Datei ausgewählt wurde
+    function updateFileName() {
+        const fileInput = document.getElementById('fileInput');
+        const fileInfo = document.getElementById('fileInfo');
 
-    dragDropContainer.addEventListener('dragover', (event) => {
-        event.preventDefault();
-        dragDropContainer.style.backgroundColor = '#e3f2fd';
-    });
+        if (fileInput.files.length > 0) {
+            fileInfo.textContent = `Ausgewählte Datei: ${fileInput.files[0].name}`;
+        } else {
+            fileInfo.textContent = '';
+        }
+    }
 
-    dragDropContainer.addEventListener('dragleave', () => {
-        dragDropContainer.style.backgroundColor = '#f0f8ff';
-    });
-
-    dragDropContainer.addEventListener('drop', (event) => {
-        event.preventDefault();
-        dragDropContainer.style.backgroundColor = '#f0f8ff';
-        const files = event.dataTransfer.files;
-        if (files.length > 0) {
-            fileInput.files = files;
-            updateFileName();
+    // Quill Editor Initialisierung
+    const editor = new Quill('#editor', {
+        theme: 'snow',
+        modules: {
+            toolbar: [
+                ['bold', 'italic', 'underline'],
+                ['link'],
+                [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                [{ 'align': [] }],
+                ['clean']
+            ]
         }
     });
 
-    function updateFileName() {
-        const fileName = fileInput.files[0] ? fileInput.files[0].name : '';
-        fileInfo.textContent = fileName ? `Ausgewählte Datei: ${fileName}` : '';
-    }
+    // PDF Generieren Button
+    document.getElementById('generatePdfButton').addEventListener('click', async () => {
+        // Show loading spinner
+        document.getElementById('loadingSpinner').style.display = 'flex';
+
+        try {
+            // Get editor content
+            const content = editor.root.innerHTML;
+            const patientId = document.getElementById('patientId').value;
+            const arztId = document.getElementById('arztId').value;
+
+            // Erstelle ein HTML-Dokument mit korrekter Formatierung für die Konvertierung
+            const htmlContent = `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <meta charset="UTF-8">
+                    <title>Medizinischer Befund</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; margin: 30px; }
+                        h1 { color: #007bff; }
+                        .header { text-align: center; margin-bottom: 30px; }
+                        .content { line-height: 1.6; }
+                        .footer { margin-top: 50px; font-size: 0.9em; color: #666; }
+                    </style>
+                </head>
+                <body>
+                    <div class="header">
+                        <h1>Medizinischer Befund</h1>
+                        <p>Erstellt am: ${new Date().toLocaleDateString()}</p>
+                    </div>
+                    <div class="content">
+                        ${content}
+                    </div>
+                    <div class="footer">
+                        <p>MedConnect - Befund</p>
+                    </div>
+                </body>
+                </html>
+            `;
+
+            // Anfrage an den Backend-Server, um das PDF zu generieren und hochzuladen
+            const response = await fetch('/api/generate-pdf', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    htmlContent: htmlContent,
+                    patientId: patientId,
+                    arztId: arztId
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error("Fehler beim Erstellen des PDFs.");
+            }
+
+            // Erfolg anzeigen
+            document.getElementById('successAlert').style.display = 'block';
+
+            // Optional: Zu Befunde-Patientenliste navigieren nach erfolgreichem Upload
+            setTimeout(() => {
+                window.location.href = '/arzt/befunde-patientenliste';
+            }, 2000);
+        } catch (error) {
+            console.error(error);
+            document.getElementById('errorAlert').style.display = 'block';
+        } finally {
+            // Hide loading spinner
+            document.getElementById('loadingSpinner').style.display = 'none';
+        }
+    });
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>

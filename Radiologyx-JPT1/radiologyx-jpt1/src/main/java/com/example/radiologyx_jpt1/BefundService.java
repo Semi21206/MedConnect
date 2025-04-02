@@ -9,8 +9,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class BefundService {
@@ -28,7 +30,7 @@ public class BefundService {
     }
 
     public void uploadBefund(Long patientId, Long arztId, MultipartFile file, LocalDateTime hochgeladenAm) throws IOException {
-        System.out.println("Upload Directory: " + uploadDirectory); // Protokolliere den Pfad("Upload Directory: " + uploadDirectory); // Protokolliere den Pfad
+        System.out.println("Upload Directory: " + uploadDirectory); // Protokolliere den Pfad
         try {
             User patient = userRepository.findById(patientId).orElseThrow(() -> new IllegalArgumentException("Patient nicht gefunden"));
             Arzt arzt = arztRepository.findById(arztId).orElseThrow(() -> new IllegalArgumentException("Arzt nicht gefunden"));
@@ -38,27 +40,38 @@ public class BefundService {
                 throw new IllegalArgumentException("Die hochgeladene Datei ist leer.");
             }
 
-            String dateiname = file.getOriginalFilename();
-            if (dateiname == null || dateiname.trim().isEmpty()) {
+            // Generiere einen eindeutigen Dateinamen, falls der Originaldateiname bereits existiert
+            String originalFilename = file.getOriginalFilename();
+            if (originalFilename == null || originalFilename.trim().isEmpty()) {
                 throw new IllegalArgumentException("Der Dateiname ist ungültig.");
             }
+
+            // Generiere einen eindeutigen Dateinamen basierend auf dem Original
+            String fileExtension = "";
+            int i = originalFilename.lastIndexOf('.');
+            if (i > 0) {
+                fileExtension = originalFilename.substring(i);
+            }
+            String uniqueFilename = "befund_" + UUID.randomUUID().toString() + fileExtension;
 
             Path uploadPath = Paths.get(uploadDirectory);
             if (!Files.exists(uploadPath)) {
                 Files.createDirectories(uploadPath);
             }
 
-            Files.copy(file.getInputStream(), uploadPath.resolve(dateiname));
+            // Verwende REPLACE_EXISTING, um eine existierende Datei zu überschreiben
+            Path filePath = uploadPath.resolve(uniqueFilename);
+            Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
 
             Befund befund = new Befund();
             befund.setArzt(arzt); // Setze den Arzt
             befund.setPatient(patient); // Setze den Patienten
-            befund.setDateiname(dateiname); // Setze den Dateinamen, falls du ihn speichern möchtest
+            befund.setDateiname(uniqueFilename); // Setze den eindeutigen Dateinamen
             befund.setHochgeladenAm(hochgeladenAm);
             befundRepository.save(befund);
 
             // Erfolgreiche Rückmeldung
-            System.out.println("Befund erfolgreich hochgeladen: " + dateiname);
+            System.out.println("Befund erfolgreich hochgeladen: " + uniqueFilename);
 
         } catch (Exception e) {
             // Logge die Exception
@@ -68,14 +81,13 @@ public class BefundService {
         }
     }
 
-
     //alle Befund abrufen
     public List<Befund> getBefundeforPatient(Long patientId) {
         User patient = userRepository.findById(patientId).orElseThrow(() -> new IllegalArgumentException("Patient nicht gefunden"));
         return befundRepository.findByPatient(patient);
     }
 
-    public File getBefundFile (String dateiname) {
-        return new File(uploadDirectory +  "/ " + dateiname);
+    public File getBefundFile(String dateiname) {
+        return new File(uploadDirectory + "/" + dateiname);
     }
 }

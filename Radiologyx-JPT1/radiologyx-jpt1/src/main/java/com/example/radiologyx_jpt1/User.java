@@ -17,17 +17,17 @@ public class User {
     @Column(name = "u_gender")
     private String gender;
     @Column(name = "u_svnr")
-    private int svnr;
+    private Integer svnr;
 
-    public int getSvnr() {
+    public Integer getSvnr() {
         return svnr;
     }
 
-    public void setSvnr(int svnr) {
+    public void setSvnr(Integer svnr) {
         this.svnr = svnr;
     }
 
-    public User(Long id, String username, String firstName, String lastName, String gender, int svnr, String password, String role) {
+    public User(Long id, String username, String firstName, String lastName, String gender, Integer svnr, String password, String role) {
         this.id = id;
         this.username = username;
         this.firstName = firstName;
