@@ -10,5 +10,5 @@ import java.util.List;
 public interface UserInterface extends JpaRepository<User, Long> {
     User findByUsername(String username);
     @Query("SELECT u from User u")
-    List<User> showUsers();  // Gibt alle Benutzer zurück
+    List<User> showUsers();  //  Gibt alle Benutzer zurück
 }
