@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profil bearbeiten - MedConnect</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600&display=swap">
+  <style>
+    body {
+      font-family: 'Nunito', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav {
+      background-color: #007bff;
+    }
+
+    .navbar-brand {
+      font-size: 1.8rem;
+      color: white;
+      font-weight: bold;
+    }
+
+    .navbar-nav .nav-link {
+      font-size: 1.1rem;
+      color: white !important;
+      padding: 10px 15px;
+    }
+
+    .navbar-nav .nav-item.active .nav-link {
+      color: #fff !important;
+      background-color: #0056b3;
+      border-radius: 5px;
+    }
+
+    .navbar-nav .nav-link:hover {
+      background-color: #0056b3;
+      color: #fff !important;
+      border-radius: 5px;
+    }
+
+    .profile-container {
+      max-width: 800px;
+      margin: 50px auto;
+      background-color: #ffffff;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .profile-container h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #007bff;
+      font-size: 2rem;
+      font-weight: bold;
+    }
+
+    form div {
+      margin-bottom: 15px;
+    }
+
+    button[type="submit"] {
+      width: 100%;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 5px;
+      font-size: 1rem;
+      font-weight: bold;
+      transition: background-color 0.3s;
+      margin-top: 20px;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #0056b3;
+    }
+
+    .form-control, .form-select {
+      height: calc(2.5rem + 2px);
+      font-size: 1rem;
+    }
+
+    .text-success, .text-danger {
+      text-align: center;
+      font-size: 1rem;
+      font-weight: bold;
+      margin-top: 15px;
+    }
+
+    label {
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+
+    .error-feedback {
+      display: none;
+      color: #dc3545;
+      font-size: 0.875rem;
+      margin-top: 0.25rem;
+    }
+
+    .invalid-input {
+      border-color: #dc3545;
+    }
+
+    .invalid-input:focus {
+      border-color: #dc3545;
+      box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25);
+    }
+  </style>
+</head>
+
+<body>
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg">
+  <div class="container">
+    <a class="navbar-brand" th:href="@{/}">MedConnect</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" th:href="@{/}">Startseite</a></li>
+        <li class="nav-item" sec:authorize="!isAuthenticated()"><a class="nav-link" th:href="@{/register}">Registrieren</a></li>
+        <li class="nav-item" sec:authorize="!isAuthenticated()"><a class="nav-link" th:href="@{/login}">Login</a></li>
+        <li class="nav-item" sec:authorize="isAuthenticated()"><a class="nav-link" th:href="@{/logout}">Logout</a></li>
+        <li class="nav-item"><a class="nav-link" th:href="@{/impressum}">Impressum</a></li>
+        <li class="nav-item" th:if="${#authorization.expression('hasRole(''ARZT'')')}"><a class="nav-link" th:href="@{/arzt/befunde-patientenliste}">Befunde hochladen</a></li>
+        <li class="nav-item" th:if="${#authorization.expression('hasRole(''ARZT'')')}"><a class="nav-link" th:href="@{/arzt/termine-einsehen}">Termine einsehen</a></li>
+        <li class="nav-item" th:if="${#authorization.expression('hasRole(''PATIENT'')')}"><a class="nav-link" th:href="@{/patient/termine-vereinbaren}">Termin Vereinbaren</a></li>
+        <li class="nav-item" th:if="${#authorization.expression('hasRole(''PATIENT'')')}"><a class="nav-link" th:href="@{/patient/befunde-einsehen}">Befunde einsehen</a></li>
+        <li class="nav-item" th:if="${#authorization.expression('hasRole(''PATIENT'')')}"><a class="nav-link active" th:href="@{/patient/profile}">Profil</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Profile Form Container -->
+<div class="profile-container">
+  <h1>Account bearbeiten</h1>
+
+  <form id="profileForm" th:action="@{/patient/profile/update}" method="post" onsubmit="return handleFormSubmission(event)">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="mb-3">
+          <label for="firstName">Vorname</label>
+          <input type="text" id="firstName" name="firstName" class="form-control" th:value="${user.firstName}" required>
+          <div id="firstNameError" class="error-feedback">Vorname muss mit einem Großbuchstaben beginnen.</div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="mb-3">
+          <label for="lastName">Nachname</label>
+          <input type="text" id="lastName" name="lastName" class="form-control" th:value="${user.lastName}" required>
+          <div id="lastNameError" class="error-feedback">Nachname muss mit einem Großbuchstaben beginnen.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="username">Username</label>
+      <input type="text" id="username" name="username" class="form-control" th:value="${user.username}" required>
+      <div id="usernameError" class="error-feedback">Dieser Benutzername ist bereits vergeben.</div>
+    </div>
+
+    <div class="mb-3">
+      <label for="svnr">SVNR</label>
+      <input type="text" id="svnr" name="svnr" class="form-control" th:value="${user.svnr}" required>
+      <div id="svnrError" class="error-feedback">Die Sozialversicherungsnummer muss genau 9 Ziffern enthalten.</div>
+    </div>
+
+    <div class="mb-3">
+      <label for="gender">Geschlecht</label>
+      <select id="gender" name="gender" class="form-select" required>
+        <option value="Mann" th:selected="${user.gender == 'Mann'}">Mann</option>
+        <option value="Frau" th:selected="${user.gender == 'Frau'}">Frau</option>
+      </select>
+    </div>
+
+    <button type="submit">Änderungen speichern</button>
+  </form>
+
+  <!-- Success and Error Messages -->
+  <div th:if="${successMessage}" th:text="${successMessage}" class="text-success"></div>
+  <div th:if="${errorMessage}" th:text="${errorMessage}" class="text-danger"></div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+
+<script>
+  // Real-time validation for first name
+  document.getElementById('firstName').addEventListener('input', function() {
+    validateFirstName();
+  });
+
+  // Real-time validation for last name
+  document.getElementById('lastName').addEventListener('input', function() {
+    validateLastName();
+  });
+
+  // Real-time validation for username
+  document.getElementById('username').addEventListener('input', function() {
+    validateUsername();
+  });
+
+  // Real-time validation for SVNR
+  document.getElementById('svnr').addEventListener('input', function() {
+    validateSVNR();
+  });
+
+  // Validate first name (starts with uppercase)
+  function validateFirstName() {
+    const firstName = document.getElementById('firstName').value;
+    const firstNameError = document.getElementById('firstNameError');
+    const regex = /^[A-ZÄÖÜ][a-zäöüß]*$/;
+
+    if (!regex.test(firstName)) {
+      document.getElementById('firstName').classList.add('invalid-input');
+      firstNameError.style.display = 'block';
+      return false;
+    } else {
+      document.getElementById('firstName').classList.remove('invalid-input');
+      firstNameError.style.display = 'none';
+      return true;
+    }
+  }
+
+  // Validate last name (starts with uppercase)
+  function validateLastName() {
+    const lastName = document.getElementById('lastName').value;
+    const lastNameError = document.getElementById('lastNameError');
+    const regex = /^[A-ZÄÖÜ][a-zäöüß]*$/;
+
+    if (!regex.test(lastName)) {
+      document.getElementById('lastName').classList.add('invalid-input');
+      lastNameError.style.display = 'block';
+      return false;
+    } else {
+      document.getElementById('lastName').classList.remove('invalid-input');
+      lastNameError.style.display = 'none';
+      return true;
+    }
+  }
+
+  // Validate username (not empty)
+  function validateUsername() {
+    const username = document.getElementById('username').value.trim();
+    const usernameError = document.getElementById('usernameError');
+
+    if (username === '') {
+      document.getElementById('username').classList.add('invalid-input');
+      usernameError.style.display = 'block';
+      usernameError.textContent = 'Benutzername darf nicht leer sein.';
+      return false;
+    }
+
+    document.getElementById('username').classList.remove('invalid-input');
+    usernameError.style.display = 'none';
+    return true;
+  }
+
+  // Validate SVNR (exactly 9 digits)
+  function validateSVNR() {
+    const svnr = document.getElementById('svnr').value;
+    const svnrError = document.getElementById('svnrError');
+    const regex = /^\d{9}$/;
+
+    if (!regex.test(svnr)) {
+      document.getElementById('svnr').classList.add('invalid-input');
+      svnrError.style.display = 'block';
+      return false;
+    } else {
+      document.getElementById('svnr').classList.remove('invalid-input');
+      svnrError.style.display = 'none';
+      return true;
+    }
+  }
+
+  // Function to check username availability via AJAX
+  async function checkUsernameAvailability(username) {
+    try {
+      const response = await fetch('/api/check-username?username=' + encodeURIComponent(username));
+      const data = await response.json();
+      return data.available;
+    } catch (error) {
+      console.error('Error checking username:', error);
+      return false;
+    }
+  }
+
+  // Form validation before submission
+  async function validateForm() {
+    const isFirstNameValid = validateFirstName();
+    const isLastNameValid = validateLastName();
+    const isSVNRValid = validateSVNR();
+    const isUsernameValid = validateUsername();
+
+    if (!isFirstNameValid || !isLastNameValid || !isSVNRValid || !isUsernameValid) {
+      return false;
+    }
+
+    const username = document.getElementById('username').value.trim();
+    const usernameError = document.getElementById('usernameError');
+
+    // Check if username is available
+    const isAvailable = await checkUsernameAvailability(username);
+    if (!isAvailable) {
+      document.getElementById('username').classList.add('invalid-input');
+      usernameError.style.display = 'block';
+      usernameError.textContent = 'Dieser Benutzername ist bereits vergeben.';
+      return false;
+    }
+
+    return true;
+  }
+
+  // Handle form submission with async validation
+  async function handleFormSubmission(event) {
+    event.preventDefault(); // Prevent default form submission
+
+    const isValid = await validateForm();
+    if (isValid) {
+      // If validation passes, submit the form
+      event.target.submit();
+    }
+  }
+</script>
+</body>
+
+</html>

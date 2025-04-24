@@ -21,7 +21,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Controller
@@ -287,6 +289,83 @@ public class RadiologyxController {
         return timeslots;
     }
 
+    @GetMapping("/patient/profile")
+    public String showPatientProfile(Model model, Principal principal) {
+        User currentUser = userInterface.findByUsername(principal.getName());
+        if (currentUser == null) {
+            return "redirect:/login";
+        }
+
+        model.addAttribute("user", currentUser);
+        return "patient-profile"; // Make sure this matches your HTML file name
+    }
+
+    @GetMapping("/api/check-username")
+    @ResponseBody
+    public Map<String, Boolean> checkUsernameAvailability(@RequestParam String username, Principal principal) {
+        User currentUser = userInterface.findByUsername(principal.getName());
+        User existingUser = userInterface.findByUsername(username);
+
+        boolean available;
+        if (existingUser == null) {
+            available = true;
+        } else {
+            // Username is available if it belongs to the current user
+            available = existingUser.getId().equals(currentUser.getId());
+        }
+
+        return Collections.singletonMap("available", available);
+    }
+
+    @PostMapping("/patient/profile/update")
+    public String updatePatientProfile(@ModelAttribute("user") User updatedUser,
+                                       RedirectAttributes redirectAttributes,
+                                       Principal principal) {
+        User currentUser = userInterface.findByUsername(principal.getName());
+        if (currentUser == null) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Patient nicht gefunden.");
+            return "redirect:/error";
+        }
+
+        // Check if username is already taken by another user
+        User existingUser = userInterface.findByUsername(updatedUser.getUsername());
+        if (existingUser != null && !existingUser.getId().equals(currentUser.getId())) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Benutzername ist bereits vergeben.");
+            return "redirect:/patient/profile";
+        }
+
+        // Validate first and last name format
+        if (!updatedUser.getFirstName().matches("[A-ZÄÖÜ][a-zäöüß]*") ||
+                !updatedUser.getLastName().matches("[A-ZÄÖÜ][a-zäöüß]*")) {
+            redirectAttributes.addFlashAttribute("errorMessage",
+                    "Bitte geben Sie einen gültigen Vor- und Nachnamen ein (Großbuchstaben am Anfang).");
+            return "redirect:/patient/profile";
+        }
+
+        // Validate SVNR format
+        if (String.valueOf(updatedUser.getSvnr()).length() != 9) {
+            redirectAttributes.addFlashAttribute("errorMessage",
+                    "Die Sozialversicherungsnummer muss genau 9 Ziffern enthalten.");
+            return "redirect:/patient/profile";
+        }
+
+        // Update user fields
+        currentUser.setUsername(updatedUser.getUsername());
+        currentUser.setFirstName(updatedUser.getFirstName());
+        currentUser.setLastName(updatedUser.getLastName());
+        currentUser.setGender(updatedUser.getGender());
+        currentUser.setSvnr(updatedUser.getSvnr());
+
+        userInterface.save(currentUser);
+        redirectAttributes.addFlashAttribute("successMessage", "Profil erfolgreich aktualisiert.");
+
+        // Update authentication if username has changed
+        if (!principal.getName().equals(updatedUser.getUsername())) {
+            return "redirect:/logout"; // Force re-login with new username
+        }
+
+        return "redirect:/patient/profile";
+    }
 
 }
 

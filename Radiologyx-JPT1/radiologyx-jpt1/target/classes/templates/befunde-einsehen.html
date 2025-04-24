@@ -106,6 +106,7 @@
                 <li class="nav-item" th:if="${#authorization.expression('hasRole(''ARZT'')')}"><a class="nav-link" th:href="@{/arzt/termine-einsehen}">Termine einsehen</a></li>
                 <li class="nav-item" th:if="${#authorization.expression('hasRole(''PATIENT'')')}"><a class="nav-link" th:href="@{/patient/termine-vereinbaren}">Termin Vereinbaren</a></li>
                 <li class="nav-item" th:if="${#authorization.expression('hasRole(''PATIENT'')')}"><a class="nav-link" th:href="@{/patient/befunde-einsehen}">Befunde einsehen</a></li>
+                <li class="nav-item" th:if="${#authorization.expression('hasRole(''PATIENT'')')}"><a class="nav-link active" th:href="@{/patient/profile}">Profil</a></li>
             </ul>
         </div>
     </div>
